@@ -2,8 +2,10 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.FoodSnap" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+         <item name="colorPrimary">@color/darkGreen</item>
     </style>
 
-    <style name="Theme.FoodSnap" parent="Base.Theme.FoodSnap" />
+    <style name="Theme.FoodSnap" parent="Base.Theme.FoodSnap" >
+        <item name="android:statusBarColor">?colorPrimary</item>
+    </style>
 </resources>
