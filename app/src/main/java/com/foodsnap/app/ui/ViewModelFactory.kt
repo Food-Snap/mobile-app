@@ -1,10 +1,11 @@
-package com.foodsnap.app.viewmodel
+package com.foodsnap.app.ui
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.foodsnap.app.data.Repository
 import com.foodsnap.app.di.Injection
+import com.foodsnap.app.ui.main.MainViewModel
 
 class ViewModelFactory(
     private val repository: Repository
