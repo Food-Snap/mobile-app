@@ -35,13 +35,15 @@ class LoginActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.apply {
             btnLogin.setOnClickListener {
-                finishAffinity()
-                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+                finish()
             }
 
             btnRegister.setOnClickListener {
-                finish()
                 startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+                finish()
             }
         }
     }

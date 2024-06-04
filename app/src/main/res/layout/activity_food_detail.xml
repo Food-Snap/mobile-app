@@ -45,7 +45,7 @@
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/darkGreen"
+                android:textColor="@color/primaryGreen"
                 android:textSize="18sp"
                 tools:text="August 3rd, 2024" />
 
@@ -72,7 +72,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Nutritional Information"
                 android:textAlignment="center"
-                android:textColor="@color/darkGreen"
+                android:textColor="@color/primaryGreen"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/calories"
-                    android:textColor="@color/darkGreen"
+                    android:textColor="@color/primaryGreen"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -95,7 +95,7 @@
                     android:id="@+id/tv_calories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/darkGreen"
+                    android:textColor="@color/primaryGreen"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     tools:text="36g" />
@@ -113,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/carbs"
-                    android:textColor="@color/darkGreen"
+                    android:textColor="@color/primaryGreen"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -121,7 +121,7 @@
                     android:id="@+id/tv_carbs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/darkGreen"
+                    android:textColor="@color/primaryGreen"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     tools:text="36g" />
@@ -139,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/proteins"
-                    android:textColor="@color/darkGreen"
+                    android:textColor="@color/primaryGreen"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -147,7 +147,7 @@
                     android:id="@+id/tv_proteins"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/darkGreen"
+                    android:textColor="@color/primaryGreen"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     tools:text="26g" />
@@ -165,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/fats"
-                    android:textColor="@color/darkGreen"
+                    android:textColor="@color/primaryGreen"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -173,7 +173,7 @@
                     android:id="@+id/tv_fats"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/darkGreen"
+                    android:textColor="@color/primaryGreen"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     tools:text="2g" />
@@ -191,7 +191,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/calcium"
-                    android:textColor="@color/darkGreen"
+                    android:textColor="@color/primaryGreen"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -199,7 +199,7 @@
                     android:id="@+id/tv_calcium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/darkGreen"
+                    android:textColor="@color/primaryGreen"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     tools:text="2g" />

@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.foodsnap.app.R
 import com.foodsnap.app.databinding.ActivityRegisterBinding
 import com.foodsnap.app.ui.login.LoginActivity
+import com.foodsnap.app.utils.ToastManager
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -34,12 +35,14 @@ class RegisterActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.apply {
             btnRegister.setOnClickListener {
+                startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                ToastManager.showToast(applicationContext, "User Created")
                 finish()
             }
 
             btnLogin.setOnClickListener {
-                finish()
                 startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                finish()
             }
         }
     }

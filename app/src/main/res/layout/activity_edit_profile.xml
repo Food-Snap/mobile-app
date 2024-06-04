@@ -18,7 +18,7 @@
         android:padding="16dp"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -29,19 +29,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/app_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:src="@drawable/ic_back" />
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Edit Profile"
+                android:text="@string/edit_profile"
+                android:fontFamily="@font/nunito_semibold"
+                app:layout_constraintTop_toTopOf="parent"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="24sp" />
+                android:textSize="30sp" />
 
 
-        </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -112,16 +116,12 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/name">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
-                    android:autofillHints=""
-                    android:background="@drawable/background_form"
                     android:inputType="text"
-                    android:paddingHorizontal="24dp"
-                    android:paddingVertical="12dp"
                     android:transitionName="name" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -132,14 +132,12 @@
                 android:layout_marginTop="8dp"
                 android:hint="Email">
 
-                <com.foodsnap.app.ui.customview.CustomEditTextEmail
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
                     android:inputType="textEmailAddress"
-                    android:paddingHorizontal="24dp"
-                    android:paddingVertical="12dp"
                     android:transitionName="email" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -150,16 +148,12 @@
                 android:layout_marginTop="8dp"
                 android:hint="Age">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_age"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
-                    android:autofillHints=""
-                    android:background="@drawable/background_form"
                     android:inputType="number"
-                    android:paddingHorizontal="24dp"
-                    android:paddingVertical="12dp"
                     android:transitionName="name" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -170,16 +164,12 @@
                 android:layout_marginTop="8dp"
                 android:hint="Height(cm)">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_height"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
-                    android:autofillHints=""
-                    android:background="@drawable/background_form"
                     android:inputType="number"
-                    android:paddingHorizontal="24dp"
-                    android:paddingVertical="12dp"
                     android:transitionName="name" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -190,16 +180,12 @@
                 android:layout_marginTop="8dp"
                 android:hint="Weight(kg)">
 
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_weight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
-                    android:autofillHints=""
-                    android:background="@drawable/background_form"
                     android:inputType="number"
-                    android:paddingHorizontal="24dp"
-                    android:paddingVertical="12dp"
                     android:transitionName="name" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -216,14 +202,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Male"/>
+                    android:text="@string/male"/>
 
                 <RadioButton
                     android:id="@+id/rb_female"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Female"/>
+                    android:text="@string/female"/>
 
             </RadioGroup>
 
@@ -232,9 +218,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/darkGreen"
+                android:backgroundTint="@color/primaryGreen"
                 android:text="@string/save"
-                android:textAllCaps="false"
+                android:textSize="20sp"
+                android:fontFamily="@font/inter_semibold"
                 android:transitionName="button"
                 app:cornerRadius="18dp" />
 

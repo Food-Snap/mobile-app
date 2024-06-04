@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:text="Theo James"
-                    android:textColor="@color/darkGreen"
+                    android:textColor="@color/primaryGreen"
                     android:textSize="26sp"
                     android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
                     android:id="@+id/tv_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/darkGreen"
+                    android:textColor="@color/primaryGreen"
                     android:textSize="18sp"
                     android:text="theojames@gmail.com" />
 
@@ -96,7 +96,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/profile"
-            android:textColor="@color/darkGreen"
+            android:textColor="@color/primaryGreen"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -108,11 +108,11 @@
             android:background="?android:attr/selectableItemBackground"
             android:drawableLeft="@drawable/ic_acc_green"
             android:drawableRight="@drawable/ic_next"
-            android:drawableTint="@color/darkGreen"
+            android:drawableTint="@color/primaryGreen"
             android:paddingHorizontal="0dp"
             android:text="Edit Profile"
             android:textAlignment="textStart"
-            android:textColor="@color/darkGreen" />
+            android:textColor="@color/primaryGreen" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_change_pass"
@@ -121,11 +121,11 @@
             android:background="?android:attr/selectableItemBackground"
             android:drawableLeft="@drawable/ic_lock"
             android:drawableRight="@drawable/ic_next"
-            android:drawableTint="@color/darkGreen"
+            android:drawableTint="@color/primaryGreen"
             android:paddingHorizontal="0dp"
             android:text="Change Password"
             android:textAlignment="textStart"
-            android:textColor="@color/darkGreen" />
+            android:textColor="@color/primaryGreen" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_privacy"
@@ -134,11 +134,11 @@
             android:background="?android:attr/selectableItemBackground"
             android:drawableLeft="@drawable/ic_check"
             android:drawableRight="@drawable/ic_next"
-            android:drawableTint="@color/darkGreen"
+            android:drawableTint="@color/primaryGreen"
             android:paddingHorizontal="0dp"
             android:text="Privacy"
             android:textAlignment="textStart"
-            android:textColor="@color/darkGreen" />
+            android:textColor="@color/primaryGreen" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_premium"
@@ -147,18 +147,18 @@
             android:background="?android:attr/selectableItemBackground"
             android:drawableLeft="@drawable/ic_check"
             android:drawableRight="@drawable/ic_next"
-            android:drawableTint="@color/darkGreen"
+            android:drawableTint="@color/primaryGreen"
             android:paddingHorizontal="0dp"
             android:text="Premium"
             android:textAlignment="textStart"
-            android:textColor="@color/darkGreen" />
+            android:textColor="@color/primaryGreen" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/support"
             android:layout_marginTop="12dp"
-            android:textColor="@color/darkGreen"
+            android:textColor="@color/primaryGreen"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -170,11 +170,11 @@
             android:background="?android:attr/selectableItemBackground"
             android:drawableLeft="@drawable/ic_phone"
             android:drawableRight="@drawable/ic_next"
-            android:drawableTint="@color/darkGreen"
+            android:drawableTint="@color/primaryGreen"
             android:paddingHorizontal="0dp"
             android:text="Call Center"
             android:textAlignment="textStart"
-            android:textColor="@color/darkGreen" />
+            android:textColor="@color/primaryGreen" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_faq"
@@ -183,18 +183,18 @@
             android:background="?android:attr/selectableItemBackground"
             android:drawableLeft="@drawable/ic_faq"
             android:drawableRight="@drawable/ic_next"
-            android:drawableTint="@color/darkGreen"
+            android:drawableTint="@color/primaryGreen"
             android:paddingHorizontal="0dp"
             android:text="FAQ"
             android:textAlignment="textStart"
-            android:textColor="@color/darkGreen" />
+            android:textColor="@color/primaryGreen" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/log_out"
             android:layout_marginTop="12dp"
-            android:textColor="@color/darkGreen"
+            android:textColor="@color/primaryGreen"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -206,11 +206,11 @@
             android:background="?android:attr/selectableItemBackground"
             android:drawableLeft="@drawable/ic_logout"
             android:drawableRight="@drawable/ic_next"
-            android:drawableTint="@color/darkGreen"
+            android:drawableTint="@color/primaryGreen"
             android:paddingHorizontal="0dp"
             android:text="@string/log_out"
             android:textAlignment="textStart"
-            android:textColor="@color/darkGreen" />
+            android:textColor="@color/primaryGreen" />
 
 
     </LinearLayout>

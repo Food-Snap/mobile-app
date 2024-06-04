@@ -1,6 +1,5 @@
 package com.foodsnap.app.ui.auth
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +10,7 @@ import com.foodsnap.app.R
 import com.foodsnap.app.databinding.ActivityAuthBinding
 import com.foodsnap.app.ui.login.LoginActivity
 import com.foodsnap.app.ui.register.RegisterActivity
+import com.foodsnap.app.utils.dp
 
 class AuthActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAuthBinding
@@ -26,9 +26,9 @@ class AuthActivity : AppCompatActivity() {
 
     private fun setFullScreenSize() {
         enableEdgeToEdge()
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { _, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            binding.llContainer.setPadding(30.dp, 30.dp, 30.dp, systemBars.bottom + 30.dp)
             insets
         }
     }

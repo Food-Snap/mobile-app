@@ -11,8 +11,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        app:cardCornerRadius="20dp"
+        android:layout_margin="32dp"
+        app:cardCornerRadius="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -27,105 +27,97 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
                 android:text="@string/welcome"
-                android:textColor="@color/darkGreen"
-                android:textSize="32sp"
-                android:textStyle="bold" />
+                android:textColor="@color/primaryGreen"
+                android:textSize="40sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="12dp"
+                android:layout_marginVertical="12dp"
+                android:fontFamily="@font/inter_light"
                 android:text="@string/onboarding_copy_text"
                 android:textAlignment="center"
-                android:textColor="@color/darkGreen" />
+                android:textColor="@color/secondaryGreen"
+                android:textSize="15sp" />
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.foodsnap.app.ui.customview.CustomTextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Email">
+                android:layout_marginTop="18dp"
+                android:hint="@string/email">
 
-                <com.foodsnap.app.ui.customview.CustomEditTextEmail
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
                     android:inputType="textEmailAddress"
-                    android:paddingHorizontal="24dp"
-                    android:paddingVertical="12dp"
                     android:transitionName="email" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.foodsnap.app.ui.customview.CustomTextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.foodsnap.app.ui.customview.CustomTextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password">
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="18dp"
+                android:hint="@string/password">
 
-                <com.foodsnap.app.ui.customview.CustomEditTextPassword
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ed_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:inputType="textPassword"
-                    android:paddingHorizontal="24dp"
-                    android:paddingVertical="12dp"
                     android:transitionName="password" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.foodsnap.app.ui.customview.CustomTextInputLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/darkGreen"
+                android:layout_marginTop="12dp"
+                android:textSize="20sp"
+                android:backgroundTint="@color/primaryGreen"
+                android:fontFamily="@font/inter_semibold"
                 android:text="@string/login"
                 android:textAllCaps="false"
                 android:transitionName="button"
                 app:cornerRadius="18dp" />
 
-            <ProgressBar
-                android:id="@+id/progressbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="16dp"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:id="@+id/buttons"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:transitionName="buttons">
+                android:textColor="@color/secondaryGreen"
+                android:fontFamily="@font/inter_light"
+                android:text="@string/or" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/or"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/btn_register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:gravity="center"
-                    android:padding="12dp"
-                    android:text="@string/sign_up_underlined"
-                    android:textColor="@color/darkGreen"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
+            <TextView
+                android:id="@+id/btn_register"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="@string/sign_up_underlined"
+                android:fontFamily="@font/inter_light"
+                android:textColor="@color/primaryGreen"/>
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

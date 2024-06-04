@@ -33,4 +33,13 @@
     <string name="support">Support</string>
     <string name="log_out">Log Out</string>
     <string name="save">Save</string>
+
+    <string name="error_password">Password must be 8 characters or more</string>
+    <string name="error_email">Please fill a valid email</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="password_confirmation">Password Confirmation</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
 </resources>

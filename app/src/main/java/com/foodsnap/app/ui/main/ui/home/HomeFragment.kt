@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
@@ -76,7 +77,7 @@ class HomeFragment : Fragment() {
             }
 
             foodAdapter.onFoodClick = { view, food ->
-                val layoutCard = view.findViewById<CardView>(R.id.card_layout)
+                val layoutCard = view.findViewById<LinearLayout>(R.id.card_layout)
 
                 val iDetail = Intent(requireActivity(), FoodDetailActivity::class.java)
                 iDetail.putExtra(FoodDetailActivity.EXTRA_FOOD, food)
