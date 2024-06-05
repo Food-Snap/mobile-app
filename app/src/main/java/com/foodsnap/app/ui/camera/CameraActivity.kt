@@ -41,7 +41,6 @@ class CameraActivity : AppCompatActivity() {
 
     private fun setListeners() {
         binding.apply {
-            toolbar.setNavigationOnClickListener { finish() }
             btnSwitch.setOnClickListener {
                 cameraPosition =
                     if (cameraPosition == CameraSelector.DEFAULT_BACK_CAMERA) CameraSelector.DEFAULT_FRONT_CAMERA

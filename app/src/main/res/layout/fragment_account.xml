@@ -10,13 +10,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:orientation="vertical"
         android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <androidx.cardview.widget.CardView
@@ -47,19 +48,18 @@
                     android:id="@+id/tv_username"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/inter_semibold"
                     android:text="Theo James"
-                    android:textColor="@color/primaryGreen"
-                    android:textSize="26sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/secondaryGreen"
+                    android:textSize="26sp" />
 
                 <TextView
                     android:id="@+id/tv_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/primaryGreen"
-                    android:textSize="18sp"
-                    android:text="theojames@gmail.com" />
+                    android:fontFamily="@font/inter"
+                    android:text="theojames@gmail.com"
+                    android:textColor="@color/secondaryGreen" />
 
 
                 <androidx.cardview.widget.CardView
@@ -73,12 +73,12 @@
                         android:id="@+id/tv_cal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_semibold"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="4dp"
                         android:text="BMI: 20 (Normal)"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="14sp" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -88,129 +88,143 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginVertical="16dp"
-            android:background="@android:color/darker_gray" />
+            android:layout_height="2dp"
+            android:layout_marginVertical="18dp"
+            android:background="#80023020" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_semibold"
             android:text="@string/profile"
-            android:textColor="@color/primaryGreen"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textColor="@color/secondaryGreen"
+            android:textSize="18sp" />
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_edit_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="18dp"
             android:background="?android:attr/selectableItemBackground"
-            android:drawableLeft="@drawable/ic_acc_green"
-            android:drawableRight="@drawable/ic_next"
-            android:drawableTint="@color/primaryGreen"
-            android:paddingHorizontal="0dp"
+            android:drawableStart="@drawable/ic_acc_fill"
+            android:drawableEnd="@drawable/ic_next"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/inter"
+            android:drawableTint="@color/secondaryGreen"
             android:text="Edit Profile"
             android:textAlignment="textStart"
-            android:textColor="@color/primaryGreen" />
+            android:textAllCaps="false"
+            android:textColor="@color/secondaryGreen" />
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_change_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:drawableLeft="@drawable/ic_lock"
-            android:drawableRight="@drawable/ic_next"
-            android:drawableTint="@color/primaryGreen"
-            android:paddingHorizontal="0dp"
+            android:drawableStart="@drawable/ic_lock"
+            android:drawableEnd="@drawable/ic_next"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/inter"
+            android:drawableTint="@color/secondaryGreen"
             android:text="Change Password"
             android:textAlignment="textStart"
-            android:textColor="@color/primaryGreen" />
+            android:textAllCaps="false"
+            android:textColor="@color/secondaryGreen" />
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_privacy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:drawableLeft="@drawable/ic_check"
-            android:drawableRight="@drawable/ic_next"
-            android:drawableTint="@color/primaryGreen"
-            android:paddingHorizontal="0dp"
+            android:drawableStart="@drawable/ic_privacy"
+            android:drawableEnd="@drawable/ic_next"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/inter"
+            android:drawableTint="@color/secondaryGreen"
             android:text="Privacy"
             android:textAlignment="textStart"
-            android:textColor="@color/primaryGreen" />
+            android:textAllCaps="false"
+            android:textColor="@color/secondaryGreen" />
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_premium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:drawableLeft="@drawable/ic_check"
-            android:drawableRight="@drawable/ic_next"
-            android:drawableTint="@color/primaryGreen"
-            android:paddingHorizontal="0dp"
+            android:drawableStart="@drawable/ic_premium"
+            android:drawableEnd="@drawable/ic_next"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/inter"
+            android:drawableTint="@color/secondaryGreen"
             android:text="Premium"
             android:textAlignment="textStart"
-            android:textColor="@color/primaryGreen" />
+            android:textAllCaps="false"
+            android:textColor="@color/secondaryGreen" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/support"
             android:layout_marginTop="12dp"
-            android:textColor="@color/primaryGreen"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/support"
+            android:textColor="@color/secondaryGreen"
+            android:textSize="18sp" />
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_call_center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="?android:attr/selectableItemBackground"
-            android:drawableLeft="@drawable/ic_phone"
-            android:drawableRight="@drawable/ic_next"
-            android:drawableTint="@color/primaryGreen"
-            android:paddingHorizontal="0dp"
+            android:drawableStart="@drawable/ic_phone"
+            android:drawableEnd="@drawable/ic_next"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/inter"
+            android:drawableTint="@color/secondaryGreen"
             android:text="Call Center"
             android:textAlignment="textStart"
-            android:textColor="@color/primaryGreen" />
+            android:textAllCaps="false"
+            android:textColor="@color/secondaryGreen" />
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_faq"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
-            android:drawableLeft="@drawable/ic_faq"
-            android:drawableRight="@drawable/ic_next"
-            android:drawableTint="@color/primaryGreen"
-            android:paddingHorizontal="0dp"
+            android:drawableStart="@drawable/ic_faq"
+            android:drawableEnd="@drawable/ic_next"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/inter"
+            android:drawableTint="@color/secondaryGreen"
             android:text="FAQ"
             android:textAlignment="textStart"
-            android:textColor="@color/primaryGreen" />
+            android:textAllCaps="false"
+            android:textColor="@color/secondaryGreen" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/log_out"
             android:layout_marginTop="12dp"
-            android:textColor="@color/primaryGreen"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/log_out"
+            android:textColor="@color/secondaryGreen"
+            android:textSize="18sp" />
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_log_out"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="?android:attr/selectableItemBackground"
-            android:drawableLeft="@drawable/ic_logout"
-            android:drawableRight="@drawable/ic_next"
-            android:drawableTint="@color/primaryGreen"
-            android:paddingHorizontal="0dp"
+            android:drawableStart="@drawable/ic_logout"
+            android:drawableEnd="@drawable/ic_next"
+            android:drawablePadding="16dp"
+            android:fontFamily="@font/inter"
+            android:drawableTint="@color/secondaryGreen"
             android:text="@string/log_out"
             android:textAlignment="textStart"
-            android:textColor="@color/primaryGreen" />
+            android:textAllCaps="false"
+            android:textColor="@color/secondaryGreen" />
 
 
     </LinearLayout>

@@ -42,4 +42,5 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="female">Female</string>
     <string name="male">Male</string>
+    <string name="nutritional_information">Nutritional Information</string>
 </resources>

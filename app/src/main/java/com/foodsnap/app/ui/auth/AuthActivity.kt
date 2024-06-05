@@ -37,10 +37,12 @@ class AuthActivity : AppCompatActivity() {
         binding.apply {
             btnLogin.setOnClickListener {
                 startActivity(Intent(this@AuthActivity, LoginActivity::class.java))
+                finish()
             }
 
             btnSignup.setOnClickListener {
                 startActivity(Intent(this@AuthActivity, RegisterActivity::class.java))
+                finish()
             }
         }
     }

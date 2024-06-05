@@ -3,11 +3,8 @@ package com.foodsnap.app.ui.detail
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.foodsnap.app.R
 import com.foodsnap.app.data.model.Food
 import com.foodsnap.app.databinding.ActivityFoodDetailBinding
 
@@ -30,14 +27,14 @@ class FoodDetailActivity : AppCompatActivity() {
 
     private fun setViews() {
         binding.apply {
-            toolbar.setNavigationOnClickListener { finish() }
+            btnBack.setOnClickListener { finish() }
             food?.let {
                 Glide.with(root)
                     .load(it.imageUrl)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(ivFood)
 
-                toolbar.title = it.name
+                tvTitle.text = it.name
                 tvDate.text = it.date
 
                 tvCalories.text = StringBuilder("${it.cal} kcal")

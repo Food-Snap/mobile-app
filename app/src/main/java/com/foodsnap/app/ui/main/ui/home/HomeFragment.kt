@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.cardview.widget.CardView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,9 +20,7 @@ import java.time.format.DateTimeFormatter
 
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
-
+    private lateinit var binding: FragmentHomeBinding
     private val foodAdapter = FoodAdapter()
 
     override fun onCreateView(
@@ -31,7 +28,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         initViews()
 
@@ -71,25 +68,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setListeners() {
-        binding.apply {
-            btnHistory.setOnClickListener {
-                startActivity(Intent(requireActivity(), HistoryActivity::class.java))
-            }
-
-            foodAdapter.onFoodClick = { view, food ->
-                val layoutCard = view.findViewById<LinearLayout>(R.id.card_layout)
-
-                val iDetail = Intent(requireActivity(), FoodDetailActivity::class.java)
-                iDetail.putExtra(FoodDetailActivity.EXTRA_FOOD, food)
-
-                val optionsCompat: ActivityOptionsCompat =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        requireActivity(),
-                        androidx.core.util.Pair(layoutCard, "layoutCard"),
-                    )
-
-                startActivity(iDetail, optionsCompat.toBundle())
-            }
+        binding.btnHistory.setOnClickListener {
+            startActivity(Intent(requireActivity(), HistoryActivity::class.java))
         }
     }
 }

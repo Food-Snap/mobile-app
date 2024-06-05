@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.foodsnap.app.data.Repository
 import com.foodsnap.app.di.Injection
+import com.foodsnap.app.ui.history.HistoryViewModel
 import com.foodsnap.app.ui.main.MainViewModel
 
 class ViewModelFactory(
@@ -16,6 +17,10 @@ class ViewModelFactory(
         return when {
             (modelClass.isAssignableFrom(MainViewModel::class.java)) -> {
                 MainViewModel(repository) as T
+            }
+
+            (modelClass.isAssignableFrom(HistoryViewModel::class.java)) -> {
+                HistoryViewModel(repository) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

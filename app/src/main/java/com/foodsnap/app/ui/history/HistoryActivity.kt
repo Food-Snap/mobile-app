@@ -1,24 +1,20 @@
 package com.foodsnap.app.ui.history
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.foodsnap.app.R
 import com.foodsnap.app.databinding.ActivityHistoryBinding
+import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.ui.adapters.FoodAdapter
-import com.foodsnap.app.ui.detail.FoodDetailActivity
 import com.foodsnap.app.utils.FakeData
 
 class HistoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHistoryBinding
     private val viewModel by viewModels<HistoryViewModel> {
-        HistoryViewModel.ViewModelInjector()
+        ViewModelFactory.getInstance(this)
     }
 
     private val foodAdapter = FoodAdapter()
@@ -68,23 +64,6 @@ class HistoryActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        binding.apply {
-            foodAdapter.onFoodClick = { view, food ->
-                val layoutCard = view.findViewById<CardView>(R.id.card_layout)
-
-                val iDetail = Intent(this@HistoryActivity, FoodDetailActivity::class.java)
-                iDetail.putExtra(FoodDetailActivity.EXTRA_FOOD, food)
-
-                val optionsCompat: ActivityOptionsCompat =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(
-                        this@HistoryActivity,
-                        androidx.core.util.Pair(layoutCard, "layoutCard"),
-                    )
-
-                startActivity(iDetail, optionsCompat.toBundle())
-            }
-
-            btnBack.setOnClickListener { finish() }
-        }
+        binding.btnBack.setOnClickListener { finish() }
     }
 }

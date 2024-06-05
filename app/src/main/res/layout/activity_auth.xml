@@ -32,19 +32,17 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:fontFamily="@font/inter_light"
+            android:fontFamily="@font/inter"
             android:text="@string/onboarding_copy_text"
             android:textAlignment="center"
             android:textColor="@color/secondaryGreen"
-            android:textSize="15sp" />
+            android:textSize="18sp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textSize="20sp"
-            android:fontFamily="@font/inter_semibold"
             android:text="@string/login" />
 
         <com.google.android.material.button.MaterialButton
@@ -52,9 +50,7 @@
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/inter_semibold"
             android:text="@string/sign_up"
             app:strokeColor="?attr/colorPrimary" />
 
