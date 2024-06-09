@@ -27,8 +27,8 @@
             <ImageView
                 android:id="@+id/btn_back"
                 android:layout_gravity="center|start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_back" />
 
@@ -39,7 +39,7 @@
                 android:fontFamily="@font/nunito_semibold"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="30sp" />
+                android:textSize="28sp" />
 
 
         </FrameLayout>

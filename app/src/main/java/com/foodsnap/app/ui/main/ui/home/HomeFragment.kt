@@ -5,16 +5,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.foodsnap.app.R
 import com.foodsnap.app.databinding.FragmentHomeBinding
 import com.foodsnap.app.ui.adapters.FoodAdapter
-import com.foodsnap.app.ui.detail.FoodDetailActivity
 import com.foodsnap.app.ui.history.HistoryActivity
 import com.foodsnap.app.utils.FakeData
+import com.foodsnap.app.utils.dp
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -70,6 +68,21 @@ class HomeFragment : Fragment() {
     private fun setListeners() {
         binding.btnHistory.setOnClickListener {
             startActivity(Intent(requireActivity(), HistoryActivity::class.java))
+        }
+
+        binding.main.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            if (scrollY > 75.dp) {
+                setStatusBarTextColor(true)
+            } else {
+                setStatusBarTextColor(false)
+            }
+        }
+    }
+
+    private fun setStatusBarTextColor(isDark: Boolean) {
+        activity?.window?.let { window ->
+            val decorView = window.decorView
+            WindowInsetsControllerCompat(window, decorView).isAppearanceLightStatusBars = isDark
         }
     }
 }

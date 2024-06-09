@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.navigation_camera -> {
                     setCameraListener()
-                    return@setOnItemSelectedListener true
+                    return@setOnItemSelectedListener false
                 }
 
                 R.id.navigation_account -> {

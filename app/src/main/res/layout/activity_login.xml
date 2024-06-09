@@ -9,9 +9,11 @@
     tools:context=".ui.login.LoginActivity">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="24dp"
+        android:transitionName="container"
         app:cardCornerRadius="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -30,7 +32,7 @@
                 android:fontFamily="@font/inter_bold"
                 android:text="@string/welcome"
                 android:textColor="@color/primaryGreen"
-                android:textSize="40sp" />
+                android:textSize="40sp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -89,20 +91,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:gravity="center"
-                android:textColor="@color/secondaryGreen"
                 android:fontFamily="@font/inter"
-                android:text="@string/or" />
+                android:gravity="center"
+                android:text="@string/or"
+                android:textColor="@color/secondaryGreen" />
 
             <TextView
-                android:id="@+id/btn_register"
+                android:id="@+id/btn_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
+                android:fontFamily="@font/inter"
                 android:gravity="center"
                 android:text="@string/sign_up_underlined"
-                android:fontFamily="@font/inter"
-                android:textColor="@color/primaryGreen"/>
+                android:textColor="@color/primaryGreen"
+                android:transitionName="signup" />
 
         </LinearLayout>
 

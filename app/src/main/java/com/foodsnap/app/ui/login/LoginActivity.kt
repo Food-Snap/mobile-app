@@ -9,7 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.foodsnap.app.R
 import com.foodsnap.app.databinding.ActivityLoginBinding
 import com.foodsnap.app.ui.main.MainActivity
-import com.foodsnap.app.ui.register.RegisterActivity
+import com.foodsnap.app.ui.signup.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -36,13 +36,13 @@ class LoginActivity : AppCompatActivity() {
         binding.apply {
             btnLogin.setOnClickListener {
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
                 finish()
             }
 
-            btnRegister.setOnClickListener {
-                startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
+            btnSignup.setOnClickListener {
+                startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
                 finish()
             }
         }

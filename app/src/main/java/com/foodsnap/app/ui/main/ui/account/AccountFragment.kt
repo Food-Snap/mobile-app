@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import com.foodsnap.app.databinding.FragmentAccountBinding
 import com.foodsnap.app.ui.auth.AuthActivity
@@ -28,6 +29,16 @@ class AccountFragment : Fragment() {
         return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setStatusBarTextColor(true)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        setStatusBarTextColor(false)
+    }
+
     private fun setListeners() {
         binding.apply {
             btnEditProfile.setOnClickListener {
@@ -38,6 +49,13 @@ class AccountFragment : Fragment() {
                 requireActivity().finishAffinity()
                 startActivity(Intent(requireActivity(), AuthActivity::class.java))
             }
+        }
+    }
+
+    private fun setStatusBarTextColor(isDark: Boolean) {
+        activity?.window?.let { window ->
+            val decorView = window.decorView
+            WindowInsetsControllerCompat(window, decorView).isAppearanceLightStatusBars = isDark
         }
     }
 }

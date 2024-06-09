@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.util.Pair
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.foodsnap.app.R
 import com.foodsnap.app.databinding.ActivityAuthBinding
 import com.foodsnap.app.ui.login.LoginActivity
-import com.foodsnap.app.ui.register.RegisterActivity
+import com.foodsnap.app.ui.signup.SignUpActivity
 import com.foodsnap.app.utils.dp
 
 class AuthActivity : AppCompatActivity() {
@@ -36,13 +38,23 @@ class AuthActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.apply {
             btnLogin.setOnClickListener {
-                startActivity(Intent(this@AuthActivity, LoginActivity::class.java))
-                finish()
+                val intent = Intent(this@AuthActivity, LoginActivity::class.java)
+                val optionsCompat: ActivityOptionsCompat =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        this@AuthActivity,
+                        Pair(llContainer, "container")
+                    )
+                startActivity(intent, optionsCompat.toBundle())
             }
 
             btnSignup.setOnClickListener {
-                startActivity(Intent(this@AuthActivity, RegisterActivity::class.java))
-                finish()
+                val intent = Intent(this@AuthActivity, SignUpActivity::class.java)
+                val optionsCompat: ActivityOptionsCompat =
+                    ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        this@AuthActivity,
+                        Pair(llContainer, "container")
+                    )
+                startActivity(intent, optionsCompat.toBundle())
             }
         }
     }

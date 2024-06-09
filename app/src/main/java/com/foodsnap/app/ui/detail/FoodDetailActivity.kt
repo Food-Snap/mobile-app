@@ -27,7 +27,7 @@ class FoodDetailActivity : AppCompatActivity() {
 
     private fun setViews() {
         binding.apply {
-            btnBack.setOnClickListener { finish() }
+            btnBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
             food?.let {
                 Glide.with(root)
                     .load(it.imageUrl)
