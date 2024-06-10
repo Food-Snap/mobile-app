@@ -5,12 +5,14 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.foodsnap.app.R
 import com.foodsnap.app.databinding.ActivityMainBinding
+import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.ui.camera.CameraActivity
 import com.foodsnap.app.ui.main.ui.account.AccountFragment
 import com.foodsnap.app.ui.main.ui.home.HomeFragment
@@ -18,12 +20,16 @@ import com.foodsnap.app.ui.main.ui.home.HomeFragment
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainViewModel by viewModels {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.getProfile()
         setFullScreenSize()
         setBottomNavView()
     }
@@ -95,7 +101,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-//        binding.bottomNav.selectedItemId = R.id.navigation_home
+        viewModel.getProfile()
     }
 
     companion object {

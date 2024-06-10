@@ -7,8 +7,5 @@ data class LoginResponse(
     val message: String,
 
     @field:SerializedName("token")
-    val token: String,
-
-    @field:SerializedName("userId")
-    val userId: String,
+    val token: String
 )

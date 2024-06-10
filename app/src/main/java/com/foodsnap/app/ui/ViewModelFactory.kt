@@ -6,7 +6,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.foodsnap.app.data.Repository
 import com.foodsnap.app.di.Injection
 import com.foodsnap.app.ui.history.HistoryViewModel
+import com.foodsnap.app.ui.login.LoginViewModel
 import com.foodsnap.app.ui.main.MainViewModel
+import com.foodsnap.app.ui.settings.editprofile.EditProfileViewModel
+import com.foodsnap.app.ui.signup.SignUpViewModel
+import com.foodsnap.app.ui.splashscreen.SplashScreenViewModel
 
 class ViewModelFactory(
     private val repository: Repository
@@ -17,6 +21,22 @@ class ViewModelFactory(
         return when {
             (modelClass.isAssignableFrom(MainViewModel::class.java)) -> {
                 MainViewModel(repository) as T
+            }
+
+            (modelClass.isAssignableFrom(SplashScreenViewModel::class.java)) -> {
+                SplashScreenViewModel(repository) as T
+            }
+
+            (modelClass.isAssignableFrom(SignUpViewModel::class.java)) -> {
+                SignUpViewModel(repository) as T
+            }
+
+            (modelClass.isAssignableFrom(LoginViewModel::class.java)) -> {
+                LoginViewModel(repository) as T
+            }
+
+            (modelClass.isAssignableFrom(EditProfileViewModel::class.java)) -> {
+                EditProfileViewModel(repository) as T
             }
 
             (modelClass.isAssignableFrom(HistoryViewModel::class.java)) -> {

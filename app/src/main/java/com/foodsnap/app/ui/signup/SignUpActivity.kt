@@ -2,17 +2,27 @@ package com.foodsnap.app.ui.signup
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.foodsnap.app.R
+import com.foodsnap.app.data.Result
 import com.foodsnap.app.databinding.ActivitySignUpBinding
+import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.ui.login.LoginActivity
 import com.foodsnap.app.utils.ToastManager
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
+    private val viewModel:SignUpViewModel by viewModels {
+        ViewModelFactory.getInstance(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
@@ -34,15 +44,89 @@ class SignUpActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.apply {
             btnSignup.setOnClickListener {
-                startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
-                ToastManager.showToast(applicationContext, "User Created")
-                finish()
+                if (tilName.isErrorEnabled || edName.text.toString().isEmpty()) {
+                    ToastManager.showToast(this@SignUpActivity, getString(R.string.error_name))
+                    return@setOnClickListener
+                } else if (tilEmail.isErrorEnabled || edEmail.text.toString().isEmpty()) {
+                    ToastManager.showToast(this@SignUpActivity, getString(R.string.error_email))
+                    return@setOnClickListener
+                }else if (tilPassword.isErrorEnabled || edPassword.text.toString().isEmpty()) {
+                    ToastManager.showToast(this@SignUpActivity, getString(R.string.error_password))
+                    return@setOnClickListener
+                }else if (tilPasswordConfirmation.isErrorEnabled || edPasswordConfirmation.text.toString().isEmpty()) {
+                    ToastManager.showToast(this@SignUpActivity, getString(R.string.error_confirmation))
+                    return@setOnClickListener
+                }
+
+                val name = edName.text.toString()
+                val email = edEmail.text.toString()
+                val password = edPassword.text.toString()
+
+                viewModel.signup(email, password, name).observe(this@SignUpActivity) { result ->
+                    when(result) {
+                        is Result.Loading -> {
+                            progressIndicator.visibility = View.VISIBLE
+                        }
+                        is Result.Error -> {
+                            progressIndicator.visibility = View.GONE
+                            ToastManager.showToast(this@SignUpActivity, result.error)
+                        }
+                        is Result.Success -> {
+                            progressIndicator.visibility = View.GONE
+                            ToastManager.showToast(applicationContext, result.data)
+                            startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+                            finish()
+                        }
+                    }
+                }
             }
 
             btnLogin.setOnClickListener {
                 startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
                 finish()
             }
+
+            edName.addTextChangedListener(object :TextWatcher{
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (s.toString().isEmpty()) {
+                        tilName.isErrorEnabled = true
+                        tilName.error = getString(R.string.error_name)
+                    } else {
+                        tilName.isErrorEnabled = false
+                        tilName.error = null
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            })
+
+            edPasswordConfirmation.addTextChangedListener(object : TextWatcher{
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {}
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    if (s.toString() != edPassword.text.toString()) {
+                        tilPasswordConfirmation.isErrorEnabled = true
+                        tilPasswordConfirmation.error = getString(R.string.error_confirmation)
+                    } else {
+                        tilPasswordConfirmation.isErrorEnabled = false
+                        tilPasswordConfirmation.error = null
+                    }
+                }
+
+                override fun afterTextChanged(s: Editable?) {}
+            })
         }
     }
 }

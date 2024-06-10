@@ -2,17 +2,25 @@ package com.foodsnap.app.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.foodsnap.app.R
+import com.foodsnap.app.data.Result
 import com.foodsnap.app.databinding.ActivityLoginBinding
+import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.ui.main.MainActivity
 import com.foodsnap.app.ui.signup.SignUpActivity
+import com.foodsnap.app.utils.ToastManager
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private val viewModel: LoginViewModel by viewModels {
+        ViewModelFactory.getInstance(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,10 +43,36 @@ class LoginActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.apply {
             btnLogin.setOnClickListener {
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                finish()
+                 if (tilEmail.isErrorEnabled || edEmail.text.toString().isEmpty()) {
+                    ToastManager.showToast(this@LoginActivity, getString(R.string.error_email))
+                    return@setOnClickListener
+                }else if (tilPassword.isErrorEnabled || edPassword.text.toString().isEmpty()) {
+                    ToastManager.showToast(this@LoginActivity, getString(R.string.error_password))
+                    return@setOnClickListener
+                }
+
+                val email = edEmail.text.toString()
+                val password = edPassword.text.toString()
+
+                viewModel.login(email, password).observe(this@LoginActivity) { result ->
+                    when(result) {
+                        is Result.Loading -> {
+                            progressIndicator.visibility = View.VISIBLE
+                        }
+                        is Result.Error -> {
+                            progressIndicator.visibility = View.GONE
+                            ToastManager.showToast(this@LoginActivity, result.error)
+                        }
+                        is Result.Success -> {
+                            progressIndicator.visibility = View.GONE
+                            ToastManager.showToast(applicationContext, result.data)
+                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
+                }
             }
 
             btnSignup.setOnClickListener {

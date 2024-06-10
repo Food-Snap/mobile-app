@@ -46,6 +46,7 @@
                 android:textSize="18sp" />
 
             <com.foodsnap.app.ui.customview.CustomTextInputLayout
+                android:id="@+id/til_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
@@ -61,6 +62,7 @@
             </com.foodsnap.app.ui.customview.CustomTextInputLayout>
 
             <com.foodsnap.app.ui.customview.CustomTextInputLayout
+                android:id="@+id/til_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
@@ -113,7 +115,7 @@
 
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progressbar"
+        android:id="@+id/progressIndicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:indeterminate="true"

@@ -49,17 +49,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_semibold"
-                    android:text="Theo James"
                     android:textColor="@color/secondaryGreen"
-                    android:textSize="26sp" />
+                    android:textSize="26sp"
+                    tools:text="Theo James" />
 
                 <TextView
                     android:id="@+id/tv_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter"
-                    android:text="theojames@gmail.com"
-                    android:textColor="@color/secondaryGreen" />
+                    android:textColor="@color/secondaryGreen"
+                    tools:text="theojames@gmail.com" />
 
 
                 <androidx.cardview.widget.CardView
@@ -109,9 +109,9 @@
             android:drawableStart="@drawable/ic_acc_fill"
             android:drawableEnd="@drawable/ic_next"
             android:drawablePadding="16dp"
-            android:fontFamily="@font/inter"
             android:drawableTint="@color/secondaryGreen"
-            android:text="Edit Profile"
+            android:fontFamily="@font/inter"
+            android:text="@string/edit_profile"
             android:textAlignment="textStart"
             android:textAllCaps="false"
             android:textColor="@color/secondaryGreen" />
@@ -124,9 +124,9 @@
             android:drawableStart="@drawable/ic_lock"
             android:drawableEnd="@drawable/ic_next"
             android:drawablePadding="16dp"
-            android:fontFamily="@font/inter"
             android:drawableTint="@color/secondaryGreen"
-            android:text="Change Password"
+            android:fontFamily="@font/inter"
+            android:text="@string/change_password"
             android:textAlignment="textStart"
             android:textAllCaps="false"
             android:textColor="@color/secondaryGreen" />
@@ -139,9 +139,9 @@
             android:drawableStart="@drawable/ic_privacy"
             android:drawableEnd="@drawable/ic_next"
             android:drawablePadding="16dp"
-            android:fontFamily="@font/inter"
             android:drawableTint="@color/secondaryGreen"
-            android:text="Privacy"
+            android:fontFamily="@font/inter"
+            android:text="@string/privacy"
             android:textAlignment="textStart"
             android:textAllCaps="false"
             android:textColor="@color/secondaryGreen" />
@@ -154,9 +154,9 @@
             android:drawableStart="@drawable/ic_premium"
             android:drawableEnd="@drawable/ic_next"
             android:drawablePadding="16dp"
-            android:fontFamily="@font/inter"
             android:drawableTint="@color/secondaryGreen"
-            android:text="Premium"
+            android:fontFamily="@font/inter"
+            android:text="@string/premium"
             android:textAlignment="textStart"
             android:textAllCaps="false"
             android:textColor="@color/secondaryGreen" />
@@ -179,9 +179,9 @@
             android:drawableStart="@drawable/ic_phone"
             android:drawableEnd="@drawable/ic_next"
             android:drawablePadding="16dp"
-            android:fontFamily="@font/inter"
             android:drawableTint="@color/secondaryGreen"
-            android:text="Call Center"
+            android:fontFamily="@font/inter"
+            android:text="@string/call_center"
             android:textAlignment="textStart"
             android:textAllCaps="false"
             android:textColor="@color/secondaryGreen" />
@@ -194,9 +194,9 @@
             android:drawableStart="@drawable/ic_faq"
             android:drawableEnd="@drawable/ic_next"
             android:drawablePadding="16dp"
-            android:fontFamily="@font/inter"
             android:drawableTint="@color/secondaryGreen"
-            android:text="FAQ"
+            android:fontFamily="@font/inter"
+            android:text="@string/faq"
             android:textAlignment="textStart"
             android:textAllCaps="false"
             android:textColor="@color/secondaryGreen" />
@@ -219,8 +219,8 @@
             android:drawableStart="@drawable/ic_logout"
             android:drawableEnd="@drawable/ic_next"
             android:drawablePadding="16dp"
-            android:fontFamily="@font/inter"
             android:drawableTint="@color/secondaryGreen"
+            android:fontFamily="@font/inter"
             android:text="@string/log_out"
             android:textAlignment="textStart"
             android:textAllCaps="false"

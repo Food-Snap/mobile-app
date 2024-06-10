@@ -2,28 +2,33 @@ package com.foodsnap.app.ui.main.ui.account
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.foodsnap.app.databinding.FragmentAccountBinding
+import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.ui.auth.AuthActivity
+import com.foodsnap.app.ui.main.MainViewModel
 import com.foodsnap.app.ui.settings.editprofile.EditProfileActivity
 
 class AccountFragment : Fragment() {
 
-    private var _binding: FragmentAccountBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentAccountBinding
+    private val viewModel: MainViewModel by viewModels {
+        ViewModelFactory.getInstance(requireActivity())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAccountBinding.inflate(inflater, container, false)
+        binding = FragmentAccountBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
         setListeners()
 
         return root
@@ -46,8 +51,20 @@ class AccountFragment : Fragment() {
             }
 
             btnLogOut.setOnClickListener {
-                requireActivity().finishAffinity()
-                startActivity(Intent(requireActivity(), AuthActivity::class.java))
+                viewModel.logout()
+                val intent = Intent(requireActivity(), AuthActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                requireActivity().finish()
+            }
+
+            viewModel.getUser().observe(requireActivity()) {
+                Log.d(TAG, "setListeners: $it")
+                tvUsername.text = it.name
+                tvEmail.text = it.email
+                if (it.bmi < 1) {
+                    tvCal.visibility = View.GONE
+                }
             }
         }
     }
@@ -57,5 +74,9 @@ class AccountFragment : Fragment() {
             val decorView = window.decorView
             WindowInsetsControllerCompat(window, decorView).isAppearanceLightStatusBars = isDark
         }
+    }
+
+    companion object {
+        private const val TAG = "AccountFragment"
     }
 }

@@ -34,8 +34,14 @@
     <string name="log_out">Log Out</string>
     <string name="save">Save</string>
 
+    <string name="error_required">This field can\'t be empty</string>
     <string name="error_password">Password must be 8 characters or more</string>
     <string name="error_email">Please fill a valid email</string>
+    <string name="error_confirmation">Password confirmation must matches the password</string>
+    <string name="error_name">Name can\'t be empty</string>
+    <string name="error_age">Age can\'t be empty</string>
+    <string name="error_height">Height can\'t be empty</string>
+    <string name="error_weight">Weight can\'t be empty</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="password_confirmation">Password Confirmation</string>
@@ -44,4 +50,12 @@
     <string name="male">Male</string>
     <string name="nutritional_information">Nutritional Information</string>
     <string name="track">Track</string>
+    <string name="faq">FAQ</string>
+    <string name="call_center">Call Center</string>
+    <string name="premium">Premium</string>
+    <string name="privacy">Privacy</string>
+    <string name="change_password">Change Password</string>
+    <string name="age">Age</string>
+    <string name="height">Height(cm)</string>
+    <string name="weight">Weight(kg)</string>
 </resources>
