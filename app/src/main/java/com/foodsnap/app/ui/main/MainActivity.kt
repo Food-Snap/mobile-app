@@ -14,8 +14,8 @@ import com.foodsnap.app.R
 import com.foodsnap.app.databinding.ActivityMainBinding
 import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.ui.camera.CameraActivity
-import com.foodsnap.app.ui.main.ui.account.AccountFragment
-import com.foodsnap.app.ui.main.ui.home.HomeFragment
+import com.foodsnap.app.ui.main.fragment.account.AccountFragment
+import com.foodsnap.app.ui.main.fragment.home.HomeFragment
 
 class MainActivity : AppCompatActivity() {
 

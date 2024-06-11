@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.main.ui.account.AccountFragment">
+    tools:context=".ui.main.fragment.account.AccountFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:padding="20dp"
+        android:paddingTop="40dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,10 +64,10 @@
 
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_cal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:cardBackgroundColor="@color/green"
                     app:cardCornerRadius="8dp">
 
                     <TextView
@@ -76,9 +77,9 @@
                         android:fontFamily="@font/inter_semibold"
                         android:paddingHorizontal="12dp"
                         android:paddingVertical="4dp"
-                        android:text="BMI: 20 (Normal)"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        tools:text="BMI: 20 (Normal)" />
 
                 </androidx.cardview.widget.CardView>
 

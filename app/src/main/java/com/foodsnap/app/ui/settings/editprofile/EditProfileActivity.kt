@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.foodsnap.app.R
@@ -12,6 +11,7 @@ import com.foodsnap.app.data.Result
 import com.foodsnap.app.databinding.ActivityEditProfileBinding
 import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.utils.ToastManager
+import com.foodsnap.app.utils.roundToString
 
 class EditProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditProfileBinding
@@ -22,7 +22,6 @@ class EditProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEditProfileBinding.inflate(layoutInflater)
-        enableEdgeToEdge()
         setContentView(binding.root)
 
         setView()
@@ -70,15 +69,15 @@ class EditProfileActivity : AppCompatActivity() {
                     .observe(this@EditProfileActivity) { result ->
                         when(result) {
                             is Result.Loading -> {
-                                progressIndicator.visibility = View.VISIBLE
+                                progressOverlay.visibility = View.VISIBLE
                             }
                             is Result.Error -> {
-                                progressIndicator.visibility = View.GONE
+                                progressOverlay.visibility = View.GONE
                                 ToastManager.showToast(this@EditProfileActivity, result.error)
                             }
                             is Result.Success -> {
-                                progressIndicator.visibility = View.GONE
-                                ToastManager.showToast(applicationContext, result.data)
+                                progressOverlay.visibility = View.GONE
+                                ToastManager.showToast(applicationContext, result.data.message)
                                 finish()
                             }
                         }
@@ -181,8 +180,8 @@ class EditProfileActivity : AppCompatActivity() {
                 edName.setText(it.name)
                 edEmail.setText(it.email)
                 if (it.age > 0)  edAge.setText(it.age.toString())
-                if (it.weight > 0) edWeight.setText(it.weight.toString())
-                if (it.height > 0) edHeight.setText(it.height.toString())
+                if (it.weight > 0) edWeight.setText(it.weight.roundToString())
+                if (it.height > 0) edHeight.setText(it.height.roundToString())
                 when (it.gender) {
                     "Female" -> rbFemale.isChecked = true
                     "Male" -> rbMale.isChecked = true

@@ -5,13 +5,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Food(
-    val id: Int,
+    val id: String,
     val name: String,
     val imageUrl: String,
     val date: String,
-    val cal: Int,
-    val carbs: Int,
-    val protein: Int,
-    val fats: Int,
-    val calcium: Int,
+    val calories: Float,
+    val carbs: Float,
+    val protein: Float,
+    val fats: Float
 ) : Parcelable

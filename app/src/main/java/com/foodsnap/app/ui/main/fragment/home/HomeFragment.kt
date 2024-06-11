@@ -1,4 +1,4 @@
-package com.foodsnap.app.ui.main.ui.home
+package com.foodsnap.app.ui.main.fragment.home
 
 import android.content.Intent
 import android.os.Bundle

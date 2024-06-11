@@ -1,10 +1,11 @@
 package com.foodsnap.app.ui.camera
 
-import android.app.Application
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Size
-import android.widget.Toast
+import android.view.OrientationEventListener
+import android.view.Surface
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
@@ -15,8 +16,12 @@ import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
 import com.foodsnap.app.databinding.ActivityCameraBinding
+import com.foodsnap.app.ui.image.ImageActivity
+import com.foodsnap.app.ui.image.ImageActivity.Companion.EXTRA_IMAGE
+import com.foodsnap.app.utils.ToastManager.showToast
 import java.io.File
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class CameraActivity : AppCompatActivity() {
@@ -75,7 +80,7 @@ class CameraActivity : AppCompatActivity() {
                     imageCapture, imageAnalysis
                 )
             } catch (e: Exception) {
-                showToast("Error : ${e.message}")
+                showToast(this,"Error : ${e.message}")
             }
         }, ContextCompat.getMainExecutor(this))
     }
@@ -89,48 +94,54 @@ class CameraActivity : AppCompatActivity() {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(e: ImageCaptureException) {
-                    showToast("Error : ${e.message}")
+                    showToast(this@CameraActivity,"Error : ${e.message}")
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val intent = Intent()
-
-                    intent.putExtra(EXTRA_IMAGE, capturedImageFile)
-                    intent.putExtra(
-                        EXTRA_CAMERA_MODE,
-                        cameraPosition == CameraSelector.DEFAULT_BACK_CAMERA
-                    )
-
-                    setResult(RESULT_OK, intent)
-                    this@CameraActivity.finish()
+                    val intent = Intent(this@CameraActivity, ImageActivity::class.java)
+                    intent.putExtra(EXTRA_IMAGE, capturedImageFile.toURI().toString())
+                    startActivity(intent)
+                    finish()
                 }
             }
         )
     }
 
-    private fun createFile(application: Application): File {
-        val mediaDir = application.externalMediaDirs.firstOrNull()?.let {
-            File(it, "image").apply { mkdirs() }
+    private fun createFile(context: Context): File {
+        val storageDir = File("/storage/emulated/0/Pictures/FoodSnap")
+
+        if (!storageDir.exists()) {
+            storageDir.mkdirs()
         }
 
-        return File(
-            if (
-                mediaDir != null && mediaDir.exists()
-            ) mediaDir else application.filesDir, "${
-                SimpleDateFormat(
-                    "ddMMyySSSSS",
-                    Locale.getDefault()
-                ).format(System.currentTimeMillis())
-            }.jpg"
-        )
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val imageFileName = "IMG_$timeStamp.jpg"
+        return File(storageDir, imageFileName)
     }
 
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    private val orientationEventListener by lazy {
+        object : OrientationEventListener(this) {
+            override fun onOrientationChanged(orientation: Int) {
+                if (orientation == ORIENTATION_UNKNOWN) {
+                    return
+                }
+                val rotation = when (orientation) {
+                    in 45 until 135 -> Surface.ROTATION_270
+                    in 135 until 225 -> Surface.ROTATION_180
+                    in 225 until 315 -> Surface.ROTATION_90
+                    else -> Surface.ROTATION_0
+                }
+                imageCapture?.targetRotation = rotation
+            }
+        }
     }
 
-    companion object {
-        const val EXTRA_IMAGE = "extra_image"
-        const val EXTRA_CAMERA_MODE = "extra_camera_mode"
+    override fun onStart() {
+        super.onStart()
+        orientationEventListener.enable()
+    }
+    override fun onStop() {
+        super.onStop()
+        orientationEventListener.disable()
     }
 }

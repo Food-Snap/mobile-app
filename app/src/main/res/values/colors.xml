@@ -2,10 +2,13 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="yellow">#FFF733</color>
+    <color name="orange">#FF5722</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primaryGreen">#038175</color>
     <color name="secondaryGreen">#023020</color>
     <color name="green">#48DE0A</color>
+    <color name="blue">#0EF6F6</color>
+    <color name="red">#D80921</color>
     <color name="opacityGray">#99000000</color>
     <color name="opacityGreen">#BF023020</color>
 </resources>

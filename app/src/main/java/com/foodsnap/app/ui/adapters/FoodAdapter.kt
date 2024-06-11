@@ -43,7 +43,7 @@ class FoodAdapter :
 
                 tvDate.text = food.date
                 tvTitle.text = food.name
-                tvCal.text = StringBuilder("${food.cal} kcal")
+                tvCal.text = StringBuilder("${food.calories} kcal")
 
                 itemView.setOnClickListener {
                     val iDetail =

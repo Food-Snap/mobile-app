@@ -7,10 +7,11 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.foodsnap.app.data.Repository
 import com.foodsnap.app.data.Result
+import com.foodsnap.app.data.model.response.EditProfileResponse
 import kotlinx.coroutines.launch
 
 class EditProfileViewModel(private val repository: Repository) : ViewModel() {
-    private val result = MutableLiveData<Result<String>>()
+    private val result = MutableLiveData<Result<EditProfileResponse>>()
     fun getUser() = repository.getUser().asLiveData()
 
     fun editProfile(
@@ -20,7 +21,7 @@ class EditProfileViewModel(private val repository: Repository) : ViewModel() {
         height: Float,
         gender: String,
         age: Int
-    ): LiveData<Result<String>> {
+    ): LiveData<Result<EditProfileResponse>> {
         result.value = Result.Loading
         viewModelScope.launch {
             result.value = repository.editProfile(name, email, weight, height, gender, age)
