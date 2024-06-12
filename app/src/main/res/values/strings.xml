@@ -28,7 +28,7 @@
     <string name="calories">Calories</string>
     <string name="food_detail">Food Detail</string>
     <string name="calcium">Calcium</string>
-    <string name="there_are_no_items">There are no items!</string>
+    <string name="there_are_no_items">Food not found!</string>
     <string name="profile">Profile</string>
     <string name="support">Support</string>
     <string name="log_out">Log Out</string>
@@ -60,4 +60,5 @@
     <string name="weight">Weight(kg)</string>
     <string name="old_password">Old Password</string>
     <string name="new_password">New password</string>
+    <string name="fill_profile">Let\'s fill your profile first</string>
 </resources>

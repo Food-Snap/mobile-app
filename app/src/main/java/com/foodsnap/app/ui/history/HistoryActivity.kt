@@ -1,6 +1,7 @@
 package com.foodsnap.app.ui.history
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.foodsnap.app.databinding.ActivityHistoryBinding
 import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.ui.adapters.FoodAdapter
-import com.foodsnap.app.utils.FakeData
 
 class HistoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHistoryBinding
@@ -32,7 +32,8 @@ class HistoryActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.apply {
-            searchedFood.observe(this@HistoryActivity) {
+            getFood().observe(this@HistoryActivity) {
+                Log.d("History Activity", "observeViewModel: $it")
                 binding.emptyView.isVisible = it.isEmpty()
                 foodAdapter.submitList(it)
             }
@@ -47,7 +48,7 @@ class HistoryActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 if (newText.isNullOrEmpty()) {
-                    viewModel.searchedFood.postValue(FakeData.generateFood())
+                    viewModel.getFood()
                 } else {
                     viewModel.searchFood(newText)
                 }

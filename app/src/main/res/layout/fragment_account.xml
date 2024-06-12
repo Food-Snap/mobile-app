@@ -24,6 +24,7 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                app:cardElevation="0dp"
                 android:layout_margin="2dp"
                 app:cardCornerRadius="100dp">
 
@@ -33,7 +34,7 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_nutrition" />
+                    tools:src="@drawable/img_avatar_male" />
 
 
             </androidx.cardview.widget.CardView>
@@ -65,6 +66,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cv_cal"
+                    app:cardElevation="0dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"

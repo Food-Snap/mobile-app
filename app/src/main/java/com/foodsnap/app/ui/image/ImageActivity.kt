@@ -15,6 +15,7 @@ import com.foodsnap.app.data.Result
 import com.foodsnap.app.databinding.ActivityImageBinding
 import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.ui.detail.FoodDetailActivity
+import com.foodsnap.app.ui.detail.FoodDetailActivity.Companion.EXTRA_PREDICT
 import com.foodsnap.app.utils.ToastManager
 
 class ImageActivity : AppCompatActivity() {
@@ -79,7 +80,7 @@ class ImageActivity : AppCompatActivity() {
                                 is Result.Success -> {
                                     progressOverlay.visibility = View.GONE
                                     val intent = Intent(this@ImageActivity, FoodDetailActivity::class.java)
-
+                                    intent.putExtra(EXTRA_PREDICT, result.data)
                                     startActivity(intent)
                                     finish()
                                 }

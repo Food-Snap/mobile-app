@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.bumptech.glide.Glide
 import com.foodsnap.app.R
 import com.foodsnap.app.databinding.FragmentAccountBinding
 import com.foodsnap.app.ui.ViewModelFactory
@@ -73,6 +74,18 @@ class AccountFragment : Fragment() {
                 Log.d(TAG, "setListeners: $it")
                 tvUsername.text = it.name
                 tvEmail.text = it.email
+                if (it.gender == "Female") {
+                    Glide
+                        .with(this@AccountFragment)
+                        .load(R.drawable.img_avatar_female)
+                        .into(ivAvatar)
+                } else {
+                    Glide
+                        .with(this@AccountFragment)
+                        .load(R.drawable.img_avatar_male)
+                        .into(ivAvatar)
+                }
+
                 val bmiCategory = getBmiCategory(it.bmi)
                 when (bmiCategory) {
                     "Underweight" -> {
@@ -131,7 +144,7 @@ class AccountFragment : Fragment() {
 
     private fun getBmiCategory(bmi: Float): String {
         return when {
-            bmi < 18.5 -> "Underweight"
+            bmi in 0.1..18.5 -> "Underweight"
             bmi in 18.5..24.9 -> "Normal"
             bmi in 25.0..29.9 -> "Overweight"
             bmi >= 30.0 -> "Obese"

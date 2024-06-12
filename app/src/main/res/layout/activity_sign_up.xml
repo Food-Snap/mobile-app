@@ -8,6 +8,14 @@
     android:background="@drawable/img_signup"
     tools:context=".ui.signup.SignUpActivity">
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progressIndicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/container"
         android:layout_width="match_parent"
@@ -148,12 +156,5 @@
 
     </androidx.cardview.widget.CardView>
 
-    <com.google.android.material.progressindicator.LinearProgressIndicator
-        android:id="@+id/progressIndicator"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:indeterminate="true"
-        android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,7 +3,9 @@ package com.foodsnap.app.data
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.foodsnap.app.data.api.ApiService
+import com.foodsnap.app.data.local.FoodDao
 import com.foodsnap.app.data.model.Food
 import com.foodsnap.app.data.model.Session
 import com.foodsnap.app.data.model.User
@@ -25,9 +27,14 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import retrofit2.HttpException
+import java.net.ConnectException
 import java.net.SocketTimeoutException
 
-class Repository(private val apiService: ApiService, private val pref: UserPreference) {
+class Repository(
+    private val apiService: ApiService,
+    private val foodDao: FoodDao,
+    private val pref: UserPreference
+) {
 
     suspend fun signup(email: String, password: String, name: String): Result<String> {
         var result: Result<String>
@@ -46,6 +53,12 @@ class Repository(private val apiService: ApiService, private val pref: UserPrefe
         } catch (e: SocketTimeoutException) {
             Log.d(TAG, "signup timeout: ${e.message}")
             result = Result.Error("Socket Timeout")
+        } catch (e: ConnectException) {
+            Log.d(TAG, "connection exception: ${e.message}")
+            result = Result.Error("Please check your network connection.")
+        } catch (e: Exception) {
+            Log.d(TAG, "exception: ${e.message}")
+            result = Result.Error("Something went wrong")
         }
         return result
     }
@@ -69,6 +82,13 @@ class Repository(private val apiService: ApiService, private val pref: UserPrefe
         } catch (e: SocketTimeoutException) {
             Log.d(TAG, "login timeout: ${e.message}")
             result = Result.Error("Socket Timeout")
+        } catch (e: ConnectException) {
+            Log.d(TAG, "connection exception: ${e.message}")
+            result = Result.Error("Please check your network connection.")
+            e.printStackTrace()
+        } catch (e: Exception) {
+            Log.d(TAG, "exception: ${e.message}")
+            result = Result.Error("Something went wrong")
         }
         return result
     }
@@ -99,22 +119,43 @@ class Repository(private val apiService: ApiService, private val pref: UserPrefe
         } catch (e: SocketTimeoutException) {
             Log.d(TAG, "editProfile timeout: ${e.message}")
             result = Result.Error("Socket Timeout")
+        } catch (e: ConnectException) {
+            Log.d(TAG, "connection exception: ${e.message}")
+            result = Result.Error("Please check your network connection.")
+        } catch (e: Exception) {
+            Log.d(TAG, "exception: ${e.message}")
+            result = Result.Error("Something went wrong")
         }
         return result
     }
 
-    suspend fun getProfile() {
+    suspend fun getDataFromApi(): Result<String> {
+        var result: Result<String>
         try {
-            val response = apiService.getProfile()
-            Log.d(TAG, "getProfile: $response")
-            pref.saveUser(response.user)
+            val profileResponse = apiService.getProfile()
+            val historyResponse = apiService.getHistory()
+            Log.d(TAG, "getDataFromApi: $profileResponse")
+            Log.d(TAG, "getDataFromApi: $historyResponse")
+            val listHistory = historyResponse.historyData.map { it.toFood() }
+            pref.saveUser(profileResponse.user)
+            foodDao.insertFood(listHistory)
+            result = Result.Success("Success")
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, MessageResponse::class.java)
-            Log.d(TAG, "getProfile error: $errorResponse")
+            Log.d(TAG, "getDataFromApi error: $errorResponse")
+            result = Result.Error(errorResponse.error ?: errorResponse.message)
         } catch (e: SocketTimeoutException) {
-            Log.d(TAG, "getProfile timeout: ${e.message}")
+            Log.d(TAG, "getDataFromApi timeout: ${e.message}")
+            result = Result.Error("Socket Timeout")
+        } catch (e: ConnectException) {
+            Log.d(TAG, "connection exception: ${e.message}")
+            result = Result.Error("Please check your network connection.")
+        } catch (e: Exception) {
+            Log.d(TAG, "exception: ${e.message}")
+            result = Result.Error("Something went wrong")
         }
+        return result
     }
 
     suspend fun changePassword(oldPassword: String, newPassword: String): Result<String> {
@@ -132,6 +173,12 @@ class Repository(private val apiService: ApiService, private val pref: UserPrefe
         } catch (e: SocketTimeoutException) {
             Log.d(TAG, "changePassword timeout: ${e.message}")
             result = Result.Error("Socket Timeout")
+        } catch (e: ConnectException) {
+            Log.d(TAG, "connection exception: ${e.message}")
+            result = Result.Error("Please check your network connection.")
+        } catch (e: Exception) {
+            Log.d(TAG, "exception: ${e.message}")
+            result = Result.Error("Something went wrong")
         }
         return result
     }
@@ -158,8 +205,13 @@ class Repository(private val apiService: ApiService, private val pref: UserPrefe
         } catch (e: SocketTimeoutException) {
             Log.d(TAG, "uploadImage timeout: ${e.message}")
             result = Result.Error("Socket Timeout")
+        } catch (e: ConnectException) {
+            Log.d(TAG, "connection exception: ${e.message}")
+            result = Result.Error("Please check your network connection.")
+        } catch (e: Exception) {
+            Log.d(TAG, "exception: ${e.message}")
+            result = Result.Error("Something went wrong")
         }
-
         return result
     }
 
@@ -178,29 +230,19 @@ class Repository(private val apiService: ApiService, private val pref: UserPrefe
         } catch (e: SocketTimeoutException) {
             Log.d(TAG, "saveFood timeout: ${e.message}")
             result = Result.Error("Socket Timeout")
+        } catch (e: ConnectException) {
+            Log.d(TAG, "connection exception: ${e.message}")
+            result = Result.Error("Please check your network connection.")
+        } catch (e: Exception) {
+            Log.d(TAG, "exception: ${e.message}")
+            result = Result.Error("Something went wrong")
         }
         return result
     }
 
-    suspend fun getHistory(): Result<List<Food>> {
-        var result: Result<List<Food>>
-        try {
-            val response = apiService.getHistory()
-            Log.d(TAG, "getHistory: $response")
-            val listHistory = response.historyData.map { it.toFood() }
-            result = Result.Success(listHistory)
-        } catch (e: HttpException) {
-            val errorBody = e.response()?.errorBody()?.string()
-            val errorResponse = Gson().fromJson(errorBody, MessageResponse::class.java)
-            Log.d(TAG, "getHistory error: $errorResponse")
-            result = Result.Error(errorResponse.error ?: errorResponse.message)
-        } catch (e: SocketTimeoutException) {
-            Log.d(TAG, "getHistory timeout: ${e.message}")
-            result = Result.Error("Socket Timeout")
-        }
-        return result
+    fun getFood(): LiveData<List<Food>> {
+        return foodDao.getAllFood()
     }
-
 
     fun getUser(): Flow<User> {
         return pref.getUser()
@@ -212,6 +254,7 @@ class Repository(private val apiService: ApiService, private val pref: UserPrefe
 
     suspend fun logout() {
         pref.logout()
+        foodDao.deleteAllFoods()
         ViewModelFactory.deleteInstance()
     }
 

@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.foodsnap.app.R
 import com.foodsnap.app.data.Result
 import com.foodsnap.app.databinding.ActivityEditProfileBinding
@@ -182,9 +183,18 @@ class EditProfileActivity : AppCompatActivity() {
                 if (it.age > 0)  edAge.setText(it.age.toString())
                 if (it.weight > 0) edWeight.setText(it.weight.roundToString())
                 if (it.height > 0) edHeight.setText(it.height.roundToString())
-                when (it.gender) {
-                    "Female" -> rbFemale.isChecked = true
-                    "Male" -> rbMale.isChecked = true
+                if (it.gender == "Female") {
+                    rbFemale.isChecked = true
+                    Glide
+                        .with(this@EditProfileActivity)
+                        .load(R.drawable.img_avatar_female)
+                        .into(ivAvatar)
+                } else {
+                    rbMale.isChecked = true
+                    Glide
+                        .with(this@EditProfileActivity)
+                        .load(R.drawable.img_avatar_male)
+                        .into(ivAvatar)
                 }
             }
         }

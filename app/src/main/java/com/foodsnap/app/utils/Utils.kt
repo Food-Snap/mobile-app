@@ -8,6 +8,7 @@ import android.graphics.Matrix
 import android.net.Uri
 import android.util.TypedValue
 import androidx.exifinterface.media.ExifInterface
+import com.foodsnap.app.data.model.Food
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -15,6 +16,8 @@ import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
+import kotlin.math.floor
 
 private const val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
 private val timeStamp: String = SimpleDateFormat(FILENAME_FORMAT, Locale.US).format(Date())
@@ -25,12 +28,38 @@ val Int.dp: Int
         TypedValue.COMPLEX_UNIT_DIP, this.toFloat(), Resources.getSystem().displayMetrics
     ).toInt()
 
+fun String.toTitleCase(): String {
+    return split(Regex("\\s+")).joinToString(" ") { word ->
+        word.lowercase().replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() }
+    }.trim()
+}
+
+fun String.toLocalDateFormat(): String {
+    var stringDate: String
+    try {
+        val utcFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+        utcFormat.timeZone = TimeZone.getTimeZone("UTC")
+
+        val date = utcFormat.parse(this)
+        val localFormat = SimpleDateFormat("MMMM d, yyyy", Locale.getDefault())
+        stringDate = localFormat.format(date!!)
+    } catch (e: Exception) {
+        stringDate = ""
+    }
+
+    return stringDate
+}
+
 fun Float.roundToString(): String {
     return when {
         this % 1 == 0f -> this.toInt().toString()
         this % 1 < 0.1f -> this.toInt().toString()
-        else -> String.format("%.1f", Math.floor((this * 10).toDouble()) / 10)
+        else -> String.format(Locale.getDefault(), "%.1f", floor((this * 10).toDouble()) / 10)
     }
+}
+
+fun List<Food>.searchFood(query: String) = this.filter { ingredient ->
+    ingredient.name.contains(query, ignoreCase = true)
 }
 
 fun createCustomTempFile(context: Context): File {
@@ -58,17 +87,17 @@ fun File.reduceFileImage(): File {
     var streamLength: Int
     do {
         val bmpStream = ByteArrayOutputStream()
-        bitmap?.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
         val bmpPicByteArray = bmpStream.toByteArray()
         streamLength = bmpPicByteArray.size
         compressQuality -= 5
     } while (streamLength > MAXIMAL_SIZE)
-    bitmap?.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
+    bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
 
     return file
 }
 
-fun Bitmap.getRotatedBitmap(file: File): Bitmap? {
+fun Bitmap.getRotatedBitmap(file: File): Bitmap {
     val orientation = ExifInterface(file).getAttributeInt(
         ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED
     )

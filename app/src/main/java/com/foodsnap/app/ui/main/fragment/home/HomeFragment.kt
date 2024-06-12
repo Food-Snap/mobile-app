@@ -7,19 +7,32 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.foodsnap.app.data.model.Food
 import com.foodsnap.app.databinding.FragmentHomeBinding
+import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.ui.adapters.FoodAdapter
 import com.foodsnap.app.ui.history.HistoryActivity
-import com.foodsnap.app.utils.FakeData
+import com.foodsnap.app.ui.main.MainViewModel
+import com.foodsnap.app.ui.settings.editprofile.EditProfileActivity
 import com.foodsnap.app.utils.dp
+import com.foodsnap.app.utils.roundToString
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private val foodAdapter = FoodAdapter()
+    private val viewModel: MainViewModel by viewModels {
+        ViewModelFactory.getInstance(requireActivity())
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +48,6 @@ class HomeFragment : Fragment() {
 
     private fun initViews() {
         setDate()
-        setChartCard()
         setRecyclerViews()
         setListeners()
     }
@@ -46,22 +58,43 @@ class HomeFragment : Fragment() {
         binding.tvDateNow.text = StringBuilder("Today, ${formatter.format(currentDate)}")
     }
 
-    private fun setChartCard() {
+    private fun setChartCard(listFood: List<Food>) {
         binding.apply {
-            tvCalory.text = "1067"
-            donutChart.setProgress(80)
-
-            tvCarbs.text = StringBuilder("36g")
-            tvProteins.text = StringBuilder("26g")
-            tvFats.text = StringBuilder("3g")
+            viewModel.getUser().observe(viewLifecycleOwner) { user ->
+                if (user.bmi < 1) {
+                    llInformation.visibility = View.VISIBLE
+                    llProgress.visibility = View.GONE
+                    btnEditProfile.setOnClickListener {
+                        startActivity(Intent(requireActivity(), EditProfileActivity::class.java))
+                    }
+                } else {
+                    llProgress.visibility = View.VISIBLE
+                    llInformation.visibility = View.GONE
+                    val bmr = user.calculateDailyCaloricNeeds()
+                    val calories = listFood.sumOf { it.calories.toDouble() }
+                    val carbs = listFood.sumOf { it.carbs.toDouble() }
+                    val proteins = listFood.sumOf { it.protein.toDouble() }
+                    val fats = listFood.sumOf { it.fats.toDouble() }
+                    val progress = (calories / bmr * 100).coerceIn(0.0, 100.0)
+                    donutChart.setProgress(progress.toInt())
+                    tvCarbs.text = "${carbs.toFloat().roundToString()}g"
+                    tvCalory.text = "${calories.toFloat().roundToString()}g"
+                    tvFats.text = "${fats.toFloat().roundToString()}g"
+                    tvProteins.text = "${proteins.toFloat().roundToString()}g"
+                }
+            }
         }
     }
 
     private fun setRecyclerViews() {
         binding.rvFood.apply {
-            foodAdapter.submitList(FakeData.generateFood())
             layoutManager = LinearLayoutManager(context)
             adapter = foodAdapter
+            viewModel.getFood().observe(viewLifecycleOwner) {
+                val todayFood = filterTodayFood(it)
+                setChartCard(todayFood)
+                foodAdapter.submitList(todayFood)
+            }
         }
     }
 
@@ -83,6 +116,32 @@ class HomeFragment : Fragment() {
         activity?.window?.let { window ->
             val decorView = window.decorView
             WindowInsetsControllerCompat(window, decorView).isAppearanceLightStatusBars = isDark
+        }
+    }
+
+    private fun filterTodayFood(foodList: List<Food>): List<Food> {
+        val todayCalendar = Calendar.getInstance().apply {
+            timeInMillis = System.currentTimeMillis()
+            set(Calendar.HOUR_OF_DAY, 0)
+            set(Calendar.MINUTE, 0)
+            set(Calendar.SECOND, 0)
+            set(Calendar.MILLISECOND, 0)
+        }
+
+        return foodList.filter { food ->
+            val foodDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).apply {
+                timeZone = TimeZone.getTimeZone("UTC")
+            }.parse(food.date)?.let { foodDate ->
+                Calendar.getInstance().apply {
+                    time = foodDate
+                }
+            }
+
+            foodDate?.let { foodCalendar ->
+                foodCalendar[Calendar.YEAR] == todayCalendar[Calendar.YEAR] &&
+                        foodCalendar[Calendar.MONTH] == todayCalendar[Calendar.MONTH] &&
+                        foodCalendar[Calendar.DAY_OF_MONTH] == todayCalendar[Calendar.DAY_OF_MONTH]
+            } ?: false
         }
     }
 }

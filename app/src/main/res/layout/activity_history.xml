@@ -94,16 +94,17 @@
         tools:visibility="visible">
 
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/ic_sad" />
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:src="@drawable/img_eat" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/there_are_no_items"
-            android:textColor="@color/opacityGray"
-            android:textSize="16sp"
+            android:textColor="@color/primaryGreen"
+            android:fontFamily="@font/nunito_semibold"
+            android:textSize="32sp"
             android:textStyle="bold" />
 
     </LinearLayout>

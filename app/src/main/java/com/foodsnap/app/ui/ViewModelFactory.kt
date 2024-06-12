@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.foodsnap.app.data.Repository
 import com.foodsnap.app.di.Injection
+import com.foodsnap.app.ui.detail.FoodDetailViewModel
 import com.foodsnap.app.ui.history.HistoryViewModel
 import com.foodsnap.app.ui.image.ImageViewModel
 import com.foodsnap.app.ui.login.LoginViewModel
@@ -47,6 +48,10 @@ class ViewModelFactory(
 
             (modelClass.isAssignableFrom(ImageViewModel::class.java)) -> {
                 ImageViewModel(repository) as T
+            }
+
+            (modelClass.isAssignableFrom(FoodDetailViewModel::class.java)) -> {
+                FoodDetailViewModel(repository) as T
             }
 
             (modelClass.isAssignableFrom(HistoryViewModel::class.java)) -> {

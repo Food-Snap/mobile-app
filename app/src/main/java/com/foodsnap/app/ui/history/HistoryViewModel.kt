@@ -1,20 +1,28 @@
 package com.foodsnap.app.ui.history
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.foodsnap.app.data.Repository
-import com.foodsnap.app.utils.FakeData
-import kotlinx.coroutines.launch
+import com.foodsnap.app.data.model.Food
+import com.foodsnap.app.utils.searchFood
 
 class HistoryViewModel(private val repository: Repository) : ViewModel() {
-    val searchedFood = MutableLiveData(FakeData.generateFood())
+    private val listFood = repository.getFood()
+    private val food = MutableLiveData<List<Food>>()
+
+    init {
+        getFood()
+    }
 
     fun searchFood(query: String) {
-        viewModelScope.launch {
-            searchedFood.postValue(
-                FakeData.searchFood(query)
-            )
+        food.value = listFood.value?.searchFood(query) ?: emptyList()
+    }
+
+    fun getFood(): LiveData<List<Food>> {
+        listFood.observeForever {
+            food.value = it ?: emptyList()
         }
+        return food
     }
 }

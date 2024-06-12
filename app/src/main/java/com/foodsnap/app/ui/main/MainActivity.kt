@@ -11,11 +11,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.foodsnap.app.R
+import com.foodsnap.app.data.Result
 import com.foodsnap.app.databinding.ActivityMainBinding
 import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.ui.camera.CameraActivity
 import com.foodsnap.app.ui.main.fragment.account.AccountFragment
 import com.foodsnap.app.ui.main.fragment.home.HomeFragment
+import com.foodsnap.app.utils.ToastManager.showToast
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,9 +31,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModel.getProfile()
         setFullScreenSize()
         setBottomNavView()
+        viewModel.getDataFromApi().observe(this){
+            if (it is Result.Error) {
+                showToast(this, it.error)
+            }
+        }
     }
 
     private fun setFullScreenSize() {
@@ -101,7 +107,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getProfile()
+        viewModel.getDataFromApi()
     }
 
     companion object {

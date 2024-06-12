@@ -14,6 +14,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.foodsnap.app.data.model.Food
 import com.foodsnap.app.databinding.ItemFoodRowBinding
 import com.foodsnap.app.ui.detail.FoodDetailActivity
+import com.foodsnap.app.utils.roundToString
+import com.foodsnap.app.utils.toLocalDateFormat
 
 class FoodAdapter :
     ListAdapter<Food, FoodAdapter.MyViewHolder>(DIFF_CALLBACK) {
@@ -41,9 +43,9 @@ class FoodAdapter :
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(ivFood)
 
-                tvDate.text = food.date
+                tvDate.text = food.date.toLocalDateFormat()
                 tvTitle.text = food.name
-                tvCal.text = StringBuilder("${food.calories} kcal")
+                tvCal.text = StringBuilder("${food.calories.roundToString()} cal")
 
                 itemView.setOnClickListener {
                     val iDetail =

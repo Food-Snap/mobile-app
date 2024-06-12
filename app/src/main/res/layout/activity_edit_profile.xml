@@ -59,6 +59,7 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 app:cardCornerRadius="100dp"
+                app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -69,7 +70,7 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_nutrition" />
+                    tools:src="@drawable/img_avatar_male" />
 
             </androidx.cardview.widget.CardView>
 

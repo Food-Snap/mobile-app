@@ -1,8 +1,9 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("kotlin-parcelize")
     alias(libs.plugins.secretGradle)
+    alias(libs.plugins.ksp)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -70,6 +71,11 @@ dependencies {
     implementation(libs.retrofit) //Retrofit
     implementation(libs.converter.gson) //Gson Converter
     implementation(libs.logging.interceptor) // Logging Interceptor
+
+    //Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

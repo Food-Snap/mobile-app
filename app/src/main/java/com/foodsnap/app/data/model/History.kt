@@ -1,9 +1,10 @@
 package com.foodsnap.app.data.model
 
+import com.foodsnap.app.utils.toTitleCase
 import com.google.gson.annotations.SerializedName
 
 data class History (
-    @field:SerializedName("Date")
+    @field:SerializedName("date")
     val date: String,
     @field:SerializedName("predictedFood")
     val predictedFood: PredictedFood,
@@ -12,14 +13,13 @@ data class History (
 ) {
     fun toFood(): Food {
         return Food(
-            predictedFood.foodId,
-            predictedFood.name,
-            imageUrl,
-            date,
-            predictedFood.calories,
-            predictedFood.carbs,
-            predictedFood.protein,
-            predictedFood.fat
+            date = date,
+            name = predictedFood.name.toTitleCase(),
+            imageUrl = imageUrl,
+            calories = predictedFood.calories,
+            carbs = predictedFood.carbs,
+            protein = predictedFood.protein,
+            fats = predictedFood.fat
         )
     }
 }
