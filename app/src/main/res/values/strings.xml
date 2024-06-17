@@ -7,17 +7,11 @@
     <string name="sign_up">Sign Up</string>
     <string name="sign_up_underlined"><u>Sign Up</u></string>
 
-    <string name="invalid_name">Invalid Name!</string>
-    <string name="invalid_email">Invalid Email!</string>
-    <string name="invalid_email_pattern">Invalid Email Pattern!</string>
-    <string name="invalid_password">Invalid Password!</string>
-    <string name="invalid_password_greater_8">Password must at least must be 8 characters!</string>
     <string name="or">or</string>
     <string name="name">Name</string>
     <string name="title_home">Home</string>
     <string name="title_camera">Camera</string>
     <string name="title_account">Account</string>
-    <string name="placeholder">Placeholder</string>
     <string name="carbs">Carbs</string>
     <string name="proteins">Proteins</string>
     <string name="fats">Fats</string>
@@ -26,8 +20,6 @@
     <string name="history">History</string>
     <string name="history_underlined"><u>History</u></string>
     <string name="calories">Calories</string>
-    <string name="food_detail">Food Detail</string>
-    <string name="calcium">Calcium</string>
     <string name="there_are_no_items">Food not found!</string>
     <string name="profile">Profile</string>
     <string name="support">Support</string>
@@ -42,6 +34,7 @@
     <string name="error_age">Age can\'t be empty</string>
     <string name="error_height">Height can\'t be empty</string>
     <string name="error_weight">Weight can\'t be empty</string>
+
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="password_confirmation">Password Confirmation</string>
@@ -61,4 +54,17 @@
     <string name="old_password">Old Password</string>
     <string name="new_password">New password</string>
     <string name="fill_profile">Let\'s fill your profile first</string>
+    <string name="empty_home">Looks like you haven\'t tracked any meals today.</string>
+    <string name="button_camera_shutter">Button Camera Shutter</string>
+    <string name="button_check">Button Check</string>
+    <string name="button_close">Button Close</string>
+    <string name="button_camera_switch">Button Camera Switch</string>
+
+    <string name="bmi_info">BMI: %1$s (%2$s)</string>
+    <string name="grams_info">%1$sg</string>
+
+    <string name="img_empty_list">Image Empty List</string>
+    <string name="img_food">Image Food</string>
+    <string name="img_logo">Image Logo</string>
+    <string name="img_fill_profile">Image Fill Profile</string>
 </resources>

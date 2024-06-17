@@ -9,6 +9,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.foodsnap.app.R
 import com.foodsnap.app.data.model.Food
 import com.foodsnap.app.databinding.FragmentHomeBinding
 import com.foodsnap.app.ui.ViewModelFactory
@@ -19,10 +20,7 @@ import com.foodsnap.app.ui.settings.editprofile.EditProfileActivity
 import com.foodsnap.app.utils.dp
 import com.foodsnap.app.utils.roundToString
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 import java.util.TimeZone
 
@@ -53,8 +51,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setDate() {
-        val currentDate = LocalDate.now()
-        val formatter = DateTimeFormatter.ofPattern("dd MMM")
+        val currentDate = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("dd MMM", Locale.getDefault())
         binding.tvDateNow.text = StringBuilder("Today, ${formatter.format(currentDate)}")
     }
 
@@ -77,10 +75,10 @@ class HomeFragment : Fragment() {
                     val fats = listFood.sumOf { it.fats.toDouble() }
                     val progress = (calories / bmr * 100).coerceIn(0.0, 100.0)
                     donutChart.setProgress(progress.toInt())
-                    tvCarbs.text = "${carbs.toFloat().roundToString()}g"
-                    tvCalory.text = "${calories.toFloat().roundToString()}g"
-                    tvFats.text = "${fats.toFloat().roundToString()}g"
-                    tvProteins.text = "${proteins.toFloat().roundToString()}g"
+                    tvCarbs.text = getString(R.string.grams_info, carbs.toFloat().roundToString())
+                    tvCalory.text = getString(R.string.grams_info, calories.toFloat().roundToString())
+                    tvFats.text = getString(R.string.grams_info, fats.toFloat().roundToString())
+                    tvProteins.text = getString(R.string.grams_info, proteins.toFloat().roundToString())
                 }
             }
         }
@@ -93,7 +91,12 @@ class HomeFragment : Fragment() {
             viewModel.getFood().observe(viewLifecycleOwner) {
                 val todayFood = filterTodayFood(it)
                 setChartCard(todayFood)
-                foodAdapter.submitList(todayFood)
+                if (todayFood.isEmpty()) {
+                    binding.emptyView.visibility = View.VISIBLE
+                } else {
+                    binding.emptyView.visibility = View.GONE
+                    foodAdapter.submitList(todayFood)
+                }
             }
         }
     }
@@ -129,13 +132,14 @@ class HomeFragment : Fragment() {
         }
 
         return foodList.filter { food ->
-            val foodDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).apply {
-                timeZone = TimeZone.getTimeZone("UTC")
-            }.parse(food.date)?.let { foodDate ->
-                Calendar.getInstance().apply {
-                    time = foodDate
+            val foodDate =
+                SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).apply {
+                    timeZone = TimeZone.getTimeZone("UTC")
+                }.parse(food.date)?.let { foodDate ->
+                    Calendar.getInstance().apply {
+                        time = foodDate
+                    }
                 }
-            }
 
             foodDate?.let { foodCalendar ->
                 foodCalendar[Calendar.YEAR] == todayCalendar[Calendar.YEAR] &&

@@ -80,7 +80,7 @@ class CameraActivity : AppCompatActivity() {
                     imageCapture, imageAnalysis
                 )
             } catch (e: Exception) {
-                showToast(this,"Error : ${e.message}")
+                showToast(this, "Error : ${e.message}")
             }
         }, ContextCompat.getMainExecutor(this))
     }
@@ -94,7 +94,7 @@ class CameraActivity : AppCompatActivity() {
             ContextCompat.getMainExecutor(this),
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(e: ImageCaptureException) {
-                    showToast(this@CameraActivity,"Error : ${e.message}")
+                    showToast(this@CameraActivity, "Error : ${e.message}")
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
@@ -108,7 +108,7 @@ class CameraActivity : AppCompatActivity() {
     }
 
     private fun createFile(context: Context): File {
-        val storageDir = File("/storage/emulated/0/Pictures/FoodSnap")
+        val storageDir = File(context.filesDir.absolutePath + "/Pictures/FoodSnap")
 
         if (!storageDir.exists()) {
             storageDir.mkdirs()
@@ -140,6 +140,7 @@ class CameraActivity : AppCompatActivity() {
         super.onStart()
         orientationEventListener.enable()
     }
+
     override fun onStop() {
         super.onStop()
         orientationEventListener.disable()

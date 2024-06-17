@@ -12,6 +12,7 @@
         android:id="@+id/iv_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:contentDescription="@string/img_food"
         tools:src="@tools:sample/avatars" />
 
     <FrameLayout
@@ -66,6 +67,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:contentDescription="@string/button_close"
             android:src="@drawable/ic_close" />
 
         <ImageView
@@ -73,6 +75,7 @@
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
+            android:contentDescription="@string/button_check"
             android:src="@drawable/ic_check" />
 
     </LinearLayout>

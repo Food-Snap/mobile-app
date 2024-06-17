@@ -130,7 +130,7 @@ class AccountFragment : Fragment() {
                 }
                 Log.d(TAG, "bmi category: $bmiCategory")
                 val stringBmi = it.bmi.roundToString()
-                binding.tvCal.text = "BMI: $stringBmi ($bmiCategory)"
+                binding.tvCal.text = getString(R.string.bmi_info, stringBmi, bmiCategory)
             }
         }
     }

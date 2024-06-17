@@ -25,12 +25,16 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels {
         ViewModelFactory.getInstance(this)
     }
+    private lateinit var homeFragment: HomeFragment
+    private lateinit var accountFragment: AccountFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        homeFragment = HomeFragment()
+        accountFragment = AccountFragment()
         setFullScreenSize()
         setBottomNavView()
         viewModel.getDataFromApi().observe(this){
@@ -48,7 +52,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_home -> {
-                    replaceFragment(HomeFragment())
+                    replaceFragment(homeFragment)
                     return@setOnItemSelectedListener true
                 }
 
@@ -58,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.navigation_account -> {
-                    replaceFragment(AccountFragment())
+                    replaceFragment(accountFragment)
                     return@setOnItemSelectedListener true
                 }
             }

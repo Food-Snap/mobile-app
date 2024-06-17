@@ -7,7 +7,7 @@ import com.foodsnap.app.data.Repository
 import com.foodsnap.app.data.model.Food
 import com.foodsnap.app.utils.searchFood
 
-class HistoryViewModel(private val repository: Repository) : ViewModel() {
+class HistoryViewModel(repository: Repository) : ViewModel() {
     private val listFood = repository.getFood()
     private val food = MutableLiveData<List<Food>>()
 

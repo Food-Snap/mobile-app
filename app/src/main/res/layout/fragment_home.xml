@@ -25,6 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
+            android:id="@+id/ll_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -194,16 +195,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:baselineAligned="false"
-                    android:visibility="gone"
-                    tools:visibility="visible"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingHorizontal="16dp"
-                    android:paddingVertical="28dp">
+                    android:paddingVertical="28dp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
                     <ImageView
                         android:layout_width="140dp"
                         android:layout_height="140dp"
+                        android:contentDescription="@string/img_fill_profile"
                         android:src="@drawable/img_information" />
 
                     <LinearLayout
@@ -227,7 +229,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
-                            android:text="@string/edit_profile"/>
+                            android:text="@string/edit_profile" />
 
                     </LinearLayout>
 
@@ -268,10 +270,42 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_food"
+                tools:itemCount="0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 tools:listitem="@layout/item_food_row" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_container"
+            tools:visibility="visible">
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:contentDescription="@string/img_empty_list"
+                android:src="@drawable/img_eat" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_semibold"
+                android:gravity="center"
+                android:text="@string/empty_home"
+                android:textColor="@color/primaryGreen"
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
