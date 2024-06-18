@@ -1,6 +1,7 @@
 package com.foodsnap.app.ui.image
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -15,8 +16,8 @@ import com.foodsnap.app.data.Result
 import com.foodsnap.app.databinding.ActivityImageBinding
 import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.ui.detail.FoodDetailActivity
-import com.foodsnap.app.ui.detail.FoodDetailActivity.Companion.EXTRA_PREDICT
-import com.foodsnap.app.utils.ToastManager
+import com.foodsnap.app.utils.ToastManager.showToast
+import com.foodsnap.app.utils.isConnectedToInternet
 
 class ImageActivity : AppCompatActivity() {
 
@@ -65,29 +66,39 @@ class ImageActivity : AppCompatActivity() {
             btnClose.setOnClickListener { finish() }
             btnCheck.setOnClickListener {
                 uri?.toUri()?.let { uri ->
-                    viewModel.predictFood(this@ImageActivity, uri)
-                        .observe(this@ImageActivity) { result ->
-                            when (result) {
-                                is Result.Loading -> {
-                                    progressOverlay.visibility = View.VISIBLE
-                                }
-
-                                is Result.Error -> {
-                                    progressOverlay.visibility = View.GONE
-                                    ToastManager.showToast(this@ImageActivity, result.error)
-                                }
-
-                                is Result.Success -> {
-                                    progressOverlay.visibility = View.GONE
-                                    val intent = Intent(this@ImageActivity, FoodDetailActivity::class.java)
-                                    intent.putExtra(EXTRA_PREDICT, result.data)
-                                    startActivity(intent)
-                                    finish()
-                                }
-                            }
-                        }
+                    if (isConnectedToInternet(this@ImageActivity)) {
+                        observePredictFood(uri)
+                    } else {
+                        showToast(this@ImageActivity, "Please check your network connection")
+                    }
                 }
             }
+        }
+    }
+
+    private fun observePredictFood(uri: Uri) {
+        binding.apply {
+            viewModel.predictFood(this@ImageActivity, uri)
+                .observe(this@ImageActivity) { result ->
+                    when (result) {
+                        is Result.Loading -> {
+                            progressOverlay.visibility = View.VISIBLE
+                        }
+
+                        is Result.Error -> {
+                            progressOverlay.visibility = View.GONE
+                            showToast(this@ImageActivity, result.error)
+                        }
+
+                        is Result.Success -> {
+                            progressOverlay.visibility = View.GONE
+                            val intent = Intent(this@ImageActivity, FoodDetailActivity::class.java)
+                            intent.putExtra(FoodDetailActivity.EXTRA_PREDICT, result.data)
+                            startActivity(intent)
+                            finish()
+                        }
+                    }
+                }
         }
     }
 

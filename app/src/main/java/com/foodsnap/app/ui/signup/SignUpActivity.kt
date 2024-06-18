@@ -15,11 +15,12 @@ import com.foodsnap.app.data.Result
 import com.foodsnap.app.databinding.ActivitySignUpBinding
 import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.ui.login.LoginActivity
-import com.foodsnap.app.utils.ToastManager
+import com.foodsnap.app.utils.ToastManager.showToast
+import com.foodsnap.app.utils.isConnectedToInternet
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
-    private val viewModel:SignUpViewModel by viewModels {
+    private val viewModel: SignUpViewModel by viewModels {
         ViewModelFactory.getInstance(this)
     }
 
@@ -45,16 +46,18 @@ class SignUpActivity : AppCompatActivity() {
         binding.apply {
             btnSignup.setOnClickListener {
                 if (tilName.isErrorEnabled || edName.text.toString().isEmpty()) {
-                    ToastManager.showToast(this@SignUpActivity, getString(R.string.error_name))
+                    showToast(this@SignUpActivity, getString(R.string.error_name))
                     return@setOnClickListener
                 } else if (tilEmail.isErrorEnabled || edEmail.text.toString().isEmpty()) {
-                    ToastManager.showToast(this@SignUpActivity, getString(R.string.error_email))
+                    showToast(this@SignUpActivity, getString(R.string.error_email))
                     return@setOnClickListener
-                }else if (tilPassword.isErrorEnabled || edPassword.text.toString().isEmpty()) {
-                    ToastManager.showToast(this@SignUpActivity, getString(R.string.error_password))
+                } else if (tilPassword.isErrorEnabled || edPassword.text.toString().isEmpty()) {
+                    showToast(this@SignUpActivity, getString(R.string.error_password))
                     return@setOnClickListener
-                }else if (tilPasswordConfirmation.isErrorEnabled || edPasswordConfirmation.text.toString().isEmpty()) {
-                    ToastManager.showToast(this@SignUpActivity, getString(R.string.error_confirmation))
+                } else if (tilPasswordConfirmation.isErrorEnabled || edPasswordConfirmation.text.toString()
+                        .isEmpty()
+                ) {
+                    showToast(this@SignUpActivity, getString(R.string.error_confirmation))
                     return@setOnClickListener
                 }
 
@@ -62,23 +65,12 @@ class SignUpActivity : AppCompatActivity() {
                 val email = edEmail.text.toString()
                 val password = edPassword.text.toString()
 
-                viewModel.signup(email, password, name).observe(this@SignUpActivity) { result ->
-                    when(result) {
-                        is Result.Loading -> {
-                            progressIndicator.visibility = View.VISIBLE
-                        }
-                        is Result.Error -> {
-                            progressIndicator.visibility = View.GONE
-                            ToastManager.showToast(this@SignUpActivity, result.error)
-                        }
-                        is Result.Success -> {
-                            progressIndicator.visibility = View.GONE
-                            ToastManager.showToast(applicationContext, result.data)
-                            startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
-                            finish()
-                        }
-                    }
+                if (isConnectedToInternet(this@SignUpActivity)) {
+                    observeSignUp(email, password, name)
+                } else {
+                    showToast(this@SignUpActivity, "Please check your network connection")
                 }
+
             }
 
             btnLogin.setOnClickListener {
@@ -86,13 +78,14 @@ class SignUpActivity : AppCompatActivity() {
                 finish()
             }
 
-            edName.addTextChangedListener(object :TextWatcher{
+            edName.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,
                     start: Int,
                     count: Int,
                     after: Int
-                ) {}
+                ) {
+                }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     if (s.toString().isEmpty()) {
@@ -107,13 +100,14 @@ class SignUpActivity : AppCompatActivity() {
                 override fun afterTextChanged(s: Editable?) {}
             })
 
-            edPasswordConfirmation.addTextChangedListener(object : TextWatcher{
+            edPasswordConfirmation.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(
                     s: CharSequence?,
                     start: Int,
                     count: Int,
                     after: Int
-                ) {}
+                ) {
+                }
 
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                     if (s.toString() != edPassword.text.toString()) {
@@ -129,4 +123,29 @@ class SignUpActivity : AppCompatActivity() {
             })
         }
     }
+
+    private fun observeSignUp(email: String, password: String, name: String) {
+        binding.apply {
+            viewModel.signup(email, password, name).observe(this@SignUpActivity) { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        progressIndicator.visibility = View.VISIBLE
+                    }
+
+                    is Result.Error -> {
+                        progressIndicator.visibility = View.GONE
+                        showToast(this@SignUpActivity, result.error)
+                    }
+
+                    is Result.Success -> {
+                        progressIndicator.visibility = View.GONE
+                        showToast(applicationContext, result.data)
+                        startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+                        finish()
+                    }
+                }
+            }
+        }
+    }
+
 }

@@ -18,6 +18,7 @@ import com.foodsnap.app.ui.camera.CameraActivity
 import com.foodsnap.app.ui.main.fragment.account.AccountFragment
 import com.foodsnap.app.ui.main.fragment.home.HomeFragment
 import com.foodsnap.app.utils.ToastManager.showToast
+import com.foodsnap.app.utils.isConnectedToInternet
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,7 +38,15 @@ class MainActivity : AppCompatActivity() {
         accountFragment = AccountFragment()
         setFullScreenSize()
         setBottomNavView()
-        viewModel.getDataFromApi().observe(this){
+        if (isConnectedToInternet(this)) {
+            observeData()
+        } else {
+            showToast(this, "Please check your network connection")
+        }
+    }
+
+    private fun observeData() {
+        viewModel.getDataFromApi().observe(this) {
             if (it is Result.Error) {
                 showToast(this, it.error)
             }

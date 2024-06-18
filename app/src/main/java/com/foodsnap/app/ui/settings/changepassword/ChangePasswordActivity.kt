@@ -10,7 +10,8 @@ import com.foodsnap.app.R
 import com.foodsnap.app.data.Result
 import com.foodsnap.app.databinding.ActivityChangePasswordBinding
 import com.foodsnap.app.ui.ViewModelFactory
-import com.foodsnap.app.utils.ToastManager
+import com.foodsnap.app.utils.ToastManager.showToast
+import com.foodsnap.app.utils.isConnectedToInternet
 
 class ChangePasswordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityChangePasswordBinding
@@ -30,7 +31,7 @@ class ChangePasswordActivity : AppCompatActivity() {
             btnBack.setOnClickListener { finish() }
             btnSave.setOnClickListener {
                 if (tilOldPassword.isErrorEnabled || edOldPassword.text.toString().isEmpty()) {
-                    ToastManager.showToast(
+                    showToast(
                         this@ChangePasswordActivity,
                         getString(R.string.error_password)
                     )
@@ -38,7 +39,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                 } else if (tilNewPassword.isErrorEnabled || edNewPassword.text.toString()
                         .isEmpty()
                 ) {
-                    ToastManager.showToast(
+                    showToast(
                         this@ChangePasswordActivity,
                         getString(R.string.error_password)
                     )
@@ -46,7 +47,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                 } else if (tilPasswordConfirmation.isErrorEnabled || edPasswordConfirmation.text.toString()
                         .isEmpty()
                 ) {
-                    ToastManager.showToast(
+                    showToast(
                         this@ChangePasswordActivity,
                         getString(R.string.error_confirmation)
                     )
@@ -56,25 +57,11 @@ class ChangePasswordActivity : AppCompatActivity() {
                 val oldPassword = edOldPassword.text.toString()
                 val newPassword = edNewPassword.text.toString()
 
-                viewModel.changePassword(oldPassword, newPassword)
-                    .observe(this@ChangePasswordActivity) { result ->
-                        when (result) {
-                            is Result.Loading -> {
-                                progressOverlay.visibility = View.VISIBLE
-                            }
-
-                            is Result.Error -> {
-                                progressOverlay.visibility = View.GONE
-                                ToastManager.showToast(this@ChangePasswordActivity, result.error)
-                            }
-
-                            is Result.Success -> {
-                                progressOverlay.visibility = View.GONE
-                                ToastManager.showToast(applicationContext, result.data)
-                                finish()
-                            }
-                        }
-                    }
+                if (isConnectedToInternet(this@ChangePasswordActivity)) {
+                    observeChangePassword(oldPassword, newPassword)
+                } else {
+                    showToast(this@ChangePasswordActivity, "Please check your network connection")
+                }
             }
 
             edPasswordConfirmation.addTextChangedListener(object : TextWatcher {
@@ -98,6 +85,30 @@ class ChangePasswordActivity : AppCompatActivity() {
 
                 override fun afterTextChanged(s: Editable?) {}
             })
+        }
+    }
+
+    private fun observeChangePassword(oldPassword: String, newPassword: String) {
+        binding.apply {
+            viewModel.changePassword(oldPassword, newPassword)
+                .observe(this@ChangePasswordActivity) { result ->
+                    when (result) {
+                        is Result.Loading -> {
+                            progressOverlay.visibility = View.VISIBLE
+                        }
+
+                        is Result.Error -> {
+                            progressOverlay.visibility = View.GONE
+                            showToast(this@ChangePasswordActivity, result.error)
+                        }
+
+                        is Result.Success -> {
+                            progressOverlay.visibility = View.GONE
+                            showToast(applicationContext, result.data)
+                            finish()
+                        }
+                    }
+                }
         }
     }
 }

@@ -11,7 +11,8 @@ import com.foodsnap.app.R
 import com.foodsnap.app.data.Result
 import com.foodsnap.app.databinding.ActivityEditProfileBinding
 import com.foodsnap.app.ui.ViewModelFactory
-import com.foodsnap.app.utils.ToastManager
+import com.foodsnap.app.utils.ToastManager.showToast
+import com.foodsnap.app.utils.isConnectedToInternet
 import com.foodsnap.app.utils.roundToString
 
 class EditProfileActivity : AppCompatActivity() {
@@ -34,25 +35,25 @@ class EditProfileActivity : AppCompatActivity() {
             btnBack.setOnClickListener { finish() }
             btnSave.setOnClickListener {
                 if (tilName.isErrorEnabled || edName.text.toString().isEmpty()) {
-                    ToastManager.showToast(this@EditProfileActivity, getString(R.string.error_name))
+                    showToast(this@EditProfileActivity, getString(R.string.error_name))
                     return@setOnClickListener
                 } else if (tilEmail.isErrorEnabled || edEmail.text.toString().isEmpty()) {
-                    ToastManager.showToast(
+                    showToast(
                         this@EditProfileActivity,
                         getString(R.string.error_email)
                     )
                     return@setOnClickListener
                 } else if (tilAge.isErrorEnabled || edAge.text.toString().isEmpty()) {
-                    ToastManager.showToast(this@EditProfileActivity, getString(R.string.error_age))
+                    showToast(this@EditProfileActivity, getString(R.string.error_age))
                     return@setOnClickListener
                 } else if (tilHeight.isErrorEnabled || edHeight.text.toString().isEmpty()) {
-                    ToastManager.showToast(
+                    showToast(
                         this@EditProfileActivity,
                         getString(R.string.error_height)
                     )
                     return@setOnClickListener
                 } else if (tilWeight.isErrorEnabled || edWeight.text.toString().isEmpty()) {
-                    ToastManager.showToast(
+                    showToast(
                         this@EditProfileActivity,
                         getString(R.string.error_weight)
                     )
@@ -66,23 +67,13 @@ class EditProfileActivity : AppCompatActivity() {
                 val weight = edWeight.text.toString().toFloat()
                 val gender = if (rbFemale.isChecked) "Female" else "Male"
 
-                viewModel.editProfile(name, email, weight, height, gender, age)
-                    .observe(this@EditProfileActivity) { result ->
-                        when(result) {
-                            is Result.Loading -> {
-                                progressOverlay.visibility = View.VISIBLE
-                            }
-                            is Result.Error -> {
-                                progressOverlay.visibility = View.GONE
-                                ToastManager.showToast(this@EditProfileActivity, result.error)
-                            }
-                            is Result.Success -> {
-                                progressOverlay.visibility = View.GONE
-                                ToastManager.showToast(applicationContext, result.data.message)
-                                finish()
-                            }
-                        }
-                    }
+                if (isConnectedToInternet(this@EditProfileActivity)) {
+                    observeEditProfile(name, email, weight, height, gender, age)
+                } else {
+                    showToast(this@EditProfileActivity, "Please check your network connection")
+                }
+
+
             }
 
             edName.addTextChangedListener(object : TextWatcher {
@@ -180,7 +171,7 @@ class EditProfileActivity : AppCompatActivity() {
             binding.apply {
                 edName.setText(it.name)
                 edEmail.setText(it.email)
-                if (it.age > 0)  edAge.setText(it.age.toString())
+                if (it.age > 0) edAge.setText(it.age.toString())
                 if (it.weight > 0) edWeight.setText(it.weight.roundToString())
                 if (it.height > 0) edHeight.setText(it.height.roundToString())
                 if (it.gender == "Female") {
@@ -197,6 +188,37 @@ class EditProfileActivity : AppCompatActivity() {
                         .into(ivAvatar)
                 }
             }
+        }
+    }
+
+    private fun observeEditProfile(
+        name: String,
+        email: String,
+        weight: Float,
+        height: Float,
+        gender: String,
+        age: Int
+    ) {
+        binding.apply {
+            viewModel.editProfile(name, email, weight, height, gender, age)
+                .observe(this@EditProfileActivity) { result ->
+                    when (result) {
+                        is Result.Loading -> {
+                            progressOverlay.visibility = View.VISIBLE
+                        }
+
+                        is Result.Error -> {
+                            progressOverlay.visibility = View.GONE
+                            showToast(this@EditProfileActivity, result.error)
+                        }
+
+                        is Result.Success -> {
+                            progressOverlay.visibility = View.GONE
+                            showToast(applicationContext, result.data.message)
+                            finish()
+                        }
+                    }
+                }
         }
     }
 }

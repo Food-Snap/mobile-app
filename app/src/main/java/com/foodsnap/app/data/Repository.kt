@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
+import com.foodsnap.app.data.api.ApiConfig
 import com.foodsnap.app.data.api.ApiService
 import com.foodsnap.app.data.local.FoodDao
 import com.foodsnap.app.data.model.Food
@@ -18,7 +19,6 @@ import com.foodsnap.app.data.model.response.EditProfileResponse
 import com.foodsnap.app.data.model.response.MessageResponse
 import com.foodsnap.app.data.model.response.PredictResponse
 import com.foodsnap.app.data.pref.UserPreference
-import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.utils.reduceFileImage
 import com.foodsnap.app.utils.uriToFile
 import com.google.gson.Gson
@@ -31,7 +31,7 @@ import java.net.ConnectException
 import java.net.SocketTimeoutException
 
 class Repository(
-    private val apiService: ApiService,
+    private var apiService: ApiService,
     private val foodDao: FoodDao,
     private val pref: UserPreference
 ) {
@@ -53,9 +53,6 @@ class Repository(
         } catch (e: SocketTimeoutException) {
             Log.d(TAG, "signup timeout: ${e.message}")
             result = Result.Error("Socket Timeout")
-        } catch (e: ConnectException) {
-            Log.d(TAG, "connection exception: ${e.message}")
-            result = Result.Error("Please check your network connection.")
         } catch (e: Exception) {
             Log.d(TAG, "exception: ${e.message}")
             result = Result.Error("Something went wrong")
@@ -71,8 +68,9 @@ class Repository(
             Log.d(TAG, "login: $response")
             Log.d(TAG, "login: ${response.message}")
             pref.saveSession(Session(response.token, true))
+            apiService = ApiConfig.getApiService(response.token)
+            getDataFromApi()
             result = Result.Success(response.message)
-            ViewModelFactory.deleteInstance()
         } catch (e: HttpException) {
             val errorBody = e.response()?.errorBody()?.string()
             val errorResponse = Gson().fromJson(errorBody, MessageResponse::class.java)
@@ -119,9 +117,6 @@ class Repository(
         } catch (e: SocketTimeoutException) {
             Log.d(TAG, "editProfile timeout: ${e.message}")
             result = Result.Error("Socket Timeout")
-        } catch (e: ConnectException) {
-            Log.d(TAG, "connection exception: ${e.message}")
-            result = Result.Error("Please check your network connection.")
         } catch (e: Exception) {
             Log.d(TAG, "exception: ${e.message}")
             result = Result.Error("Something went wrong")
@@ -148,9 +143,6 @@ class Repository(
         } catch (e: SocketTimeoutException) {
             Log.d(TAG, "getDataFromApi timeout: ${e.message}")
             result = Result.Error("Socket Timeout")
-        } catch (e: ConnectException) {
-            Log.d(TAG, "connection exception: ${e.message}")
-            result = Result.Error("Please check your network connection.")
         } catch (e: Exception) {
             Log.d(TAG, "exception: ${e.message}")
             result = Result.Error("Something went wrong")
@@ -173,9 +165,6 @@ class Repository(
         } catch (e: SocketTimeoutException) {
             Log.d(TAG, "changePassword timeout: ${e.message}")
             result = Result.Error("Socket Timeout")
-        } catch (e: ConnectException) {
-            Log.d(TAG, "connection exception: ${e.message}")
-            result = Result.Error("Please check your network connection.")
         } catch (e: Exception) {
             Log.d(TAG, "exception: ${e.message}")
             result = Result.Error("Something went wrong")
@@ -205,9 +194,6 @@ class Repository(
         } catch (e: SocketTimeoutException) {
             Log.d(TAG, "uploadImage timeout: ${e.message}")
             result = Result.Error("Socket Timeout")
-        } catch (e: ConnectException) {
-            Log.d(TAG, "connection exception: ${e.message}")
-            result = Result.Error("Please check your network connection.")
         } catch (e: Exception) {
             Log.d(TAG, "exception: ${e.message}")
             result = Result.Error("Something went wrong")
@@ -230,9 +216,6 @@ class Repository(
         } catch (e: SocketTimeoutException) {
             Log.d(TAG, "saveFood timeout: ${e.message}")
             result = Result.Error("Socket Timeout")
-        } catch (e: ConnectException) {
-            Log.d(TAG, "connection exception: ${e.message}")
-            result = Result.Error("Please check your network connection.")
         } catch (e: Exception) {
             Log.d(TAG, "exception: ${e.message}")
             result = Result.Error("Something went wrong")
@@ -255,7 +238,7 @@ class Repository(
     suspend fun logout() {
         pref.logout()
         foodDao.deleteAllFoods()
-        ViewModelFactory.deleteInstance()
+        apiService = ApiConfig.getApiService("")
     }
 
     companion object {

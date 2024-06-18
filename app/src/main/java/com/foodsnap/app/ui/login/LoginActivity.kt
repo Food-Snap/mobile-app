@@ -14,7 +14,8 @@ import com.foodsnap.app.databinding.ActivityLoginBinding
 import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.ui.main.MainActivity
 import com.foodsnap.app.ui.signup.SignUpActivity
-import com.foodsnap.app.utils.ToastManager
+import com.foodsnap.app.utils.ToastManager.showToast
+import com.foodsnap.app.utils.isConnectedToInternet
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -43,41 +44,52 @@ class LoginActivity : AppCompatActivity() {
     private fun setListeners() {
         binding.apply {
             btnLogin.setOnClickListener {
-                 if (tilEmail.isErrorEnabled || edEmail.text.toString().isEmpty()) {
-                    ToastManager.showToast(this@LoginActivity, getString(R.string.error_email))
+                if (tilEmail.isErrorEnabled || edEmail.text.toString().isEmpty()) {
                     return@setOnClickListener
-                }else if (tilPassword.isErrorEnabled || edPassword.text.toString().isEmpty()) {
-                    ToastManager.showToast(this@LoginActivity, getString(R.string.error_password))
+                } else if (tilPassword.isErrorEnabled || edPassword.text.toString().isEmpty()) {
                     return@setOnClickListener
                 }
 
                 val email = edEmail.text.toString()
                 val password = edPassword.text.toString()
-
-                viewModel.login(email, password).observe(this@LoginActivity) { result ->
-                    when(result) {
-                        is Result.Loading -> {
-                            progressIndicator.visibility = View.VISIBLE
-                        }
-                        is Result.Error -> {
-                            progressIndicator.visibility = View.GONE
-                            ToastManager.showToast(this@LoginActivity, result.error)
-                        }
-                        is Result.Success -> {
-                            progressIndicator.visibility = View.GONE
-                            ToastManager.showToast(applicationContext, result.data)
-                            val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            startActivity(intent)
-                            finish()
-                        }
-                    }
+                if (isConnectedToInternet(this@LoginActivity)) {
+                    observeLogin(email, password)
+                } else {
+                    showToast(this@LoginActivity, "Please check your network connection")
                 }
+
             }
 
             btnSignup.setOnClickListener {
                 startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
                 finish()
+            }
+        }
+    }
+
+    private fun observeLogin(email: String, password: String) {
+        binding.apply {
+            viewModel.login(email, password).observe(this@LoginActivity) { result ->
+                when (result) {
+                    is Result.Loading -> {
+                        progressIndicator.visibility = View.VISIBLE
+                    }
+
+                    is Result.Error -> {
+                        progressIndicator.visibility = View.GONE
+                        showToast(this@LoginActivity, result.error)
+                    }
+
+                    is Result.Success -> {
+                        progressIndicator.visibility = View.GONE
+                        showToast(applicationContext, result.data)
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                        finish()
+                    }
+                }
             }
         }
     }

@@ -75,9 +75,5 @@ class ViewModelFactory(
             }
             return INSTANCE as ViewModelFactory
         }
-
-        fun deleteInstance() {
-            INSTANCE = null
-        }
     }
 }

@@ -16,7 +16,8 @@ import com.foodsnap.app.ui.ViewModelFactory
 import com.foodsnap.app.ui.image.ImageActivity
 import com.foodsnap.app.ui.image.ImageActivity.Companion.EXTRA_IMAGE
 import com.foodsnap.app.ui.image.ImageActivity.Companion.EXTRA_TITLE
-import com.foodsnap.app.utils.ToastManager
+import com.foodsnap.app.utils.ToastManager.showToast
+import com.foodsnap.app.utils.isConnectedToInternet
 import com.foodsnap.app.utils.roundToString
 import com.foodsnap.app.utils.toLocalDateFormat
 import com.foodsnap.app.utils.toTitleCase
@@ -77,26 +78,36 @@ class FoodDetailActivity : AppCompatActivity() {
             btnTrack.visibility = View.VISIBLE
             tvDate.visibility = View.GONE
             btnTrack.setOnClickListener {
-                viewModel.saveFood(prediction.predictedFood.foodId, prediction.imageUrl)
-                    .observe(this@FoodDetailActivity) { result ->
-                        when (result) {
-                            is Result.Loading -> {
-                                progressOverlay.visibility = View.VISIBLE
-                            }
+                if (isConnectedToInternet(this@FoodDetailActivity)) {
+                    observeSaveFood(prediction)
+                } else {
+                    showToast(this@FoodDetailActivity, "Please check your network connection")
+                }
+            }
+        }
+    }
 
-                            is Result.Error -> {
-                                progressOverlay.visibility = View.GONE
-                                ToastManager.showToast(this@FoodDetailActivity, result.error)
-                            }
+    private fun observeSaveFood(prediction: PredictResponse) {
+        binding.apply {
+            viewModel.saveFood(prediction.predictedFood.foodId, prediction.imageUrl)
+                .observe(this@FoodDetailActivity) { result ->
+                    when (result) {
+                        is Result.Loading -> {
+                            progressOverlay.visibility = View.VISIBLE
+                        }
 
-                            is Result.Success -> {
-                                progressOverlay.visibility = View.GONE
-                                ToastManager.showToast(applicationContext, result.data)
-                                finish()
-                            }
+                        is Result.Error -> {
+                            progressOverlay.visibility = View.GONE
+                            showToast(this@FoodDetailActivity, result.error)
+                        }
+
+                        is Result.Success -> {
+                            progressOverlay.visibility = View.GONE
+                            showToast(applicationContext, result.data)
+                            finish()
                         }
                     }
-            }
+                }
         }
     }
 
