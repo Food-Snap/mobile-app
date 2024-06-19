@@ -34,20 +34,20 @@ To set up the project locally, follow these steps:
 ## Screenshots
 
 <div style="display: flex; justify-content: space-between;">
-  <img src="https://github.com/Food-Snap/mobile-app/blob/main/screenshots/Splash%20Screen.png?raw=true" width="24%">
-  <img src="https://github.com/Food-Snap/mobile-app/blob/main/screenshots/OnBoading.png?raw=true" width="24%">
-  <img src="https://github.com/Food-Snap/mobile-app/blob/main/screenshots/Login.png?raw=true" width="24%">
-  <img src="https://github.com/Food-Snap/mobile-app/blob/main/screenshots/SignUp.png?raw=true" width="24%">
+  <img src="https://github.com/Food-Snap/.github/blob/main/screenshots/Splash%20Screen.png?raw=true" width="24%">
+  <img src="https://github.com/Food-Snap/.github/blob/main/screenshots/OnBoading.png?raw=true" width="24%">
+  <img src="https://github.com/Food-Snap/.github/blob/main/screenshots/Login.png?raw=true" width="24%">
+  <img src="https://github.com/Food-Snap/.github/blob/main/screenshots/SignUp.png?raw=true" width="24%">
 </div>
 <div style="display: flex; justify-content: space-between;">
-  <img src="https://github.com/Food-Snap/mobile-app/blob/main/screenshots/Home.png?raw=true" width="24%">
-  <img src="https://github.com/Food-Snap/mobile-app/blob/main/screenshots/History.png?raw=true" width="24%">
-  <img src="https://github.com/Food-Snap/mobile-app/blob/main/screenshots/Food%20Detail.png?raw=true" width="24%">
-  <img src="https://github.com/Food-Snap/mobile-app/blob/main/screenshots/Profile.png?raw=true" width="24%">
+  <img src="https://github.com/Food-snap/.github/blob/main/screenshots/Home.png?raw=true" width="24%">
+  <img src="https://github.com/Food-Snap/.github/blob/main/screenshots/History.png?raw=true" width="24%">
+  <img src="https://github.com/Food-Snap/.github/blob/main/screenshots/Food%20Detail.png?raw=true" width="24%">
+  <img src="https://github.com/Food-Snap/.github/blob/main/screenshots/Profile.png?raw=true" width="24%">
 </div>
 <div style="display: flex; justify-content: space-between;">
-  <img src="https://github.com/Food-Snap/mobile-app/blob/main/screenshots/Edit%20Profile.png?raw=true" width="24%">
-  <img src="https://github.com/Food-Snap/mobile-app/blob/main/screenshots/Edit%20Password.png?raw=true" width="24%">
+  <img src="https://github.com/Food-Snap/.github/blob/main/screenshots/Edit%20Profile.png?raw=true" width="24%">
+  <img src="https://github.com/Food-Snap/.github/blob/main/screenshots/Edit%20Password.png?raw=true" width="24%">
 </div>
 
 ## Demo Video
