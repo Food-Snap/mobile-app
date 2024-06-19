@@ -1,12 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.FoodSnap" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Base.Theme.Foodsnap" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/primaryGreen</item>
 
     </style>
 
-    <style name="Theme.FoodSnap" parent="Base.Theme.FoodSnap">
+    <style name="Theme.Foodsnap" parent="Base.Theme.Foodsnap">
         <item name="android:statusBarColor">?colorPrimary</item>
         <item name="android:windowLightStatusBar">false</item>
         <item name="android:windowIsTranslucent">true</item>
